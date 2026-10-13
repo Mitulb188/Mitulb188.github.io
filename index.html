@@ -10,229 +10,233 @@
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #F3F5F9;
-    --surface: #E7EBF2;
+    --bg: #EEF1F6;
+    --tile: #FFFFFF;
+    --tile-2: #F4F6FA;
     --ink: #121A2B;
     --muted: #59657E;
-    --line: #D2D9E5;
+    --line: #DCE2EC;
     --accent: #1E7A8A;
     --panel: #0B1426;
     --panel-2: #111D35;
-    --panel-3: #18263F;
     --panel-line: #24365A;
     --panel-ink: #DCE4F2;
     --panel-muted: #8794AE;
-    --t-research: #5CC3B0;
-    --t-industry: #F0CF5A;
-    --t-projects: #8EA2F0;
-    --t-education: #E39A7B;
-    --t-pubs: #E8EDF7;
-    --hw: 150px;
+    --c-audio: #1E7A8A;
+    --c-llm: #4F5FC4;
+    --c-systems: #A9700E;
+    --gold: #F0CF5A;
     --font: "Archivo", system-ui, sans-serif;
+    --r: 20px;
     color-scheme: light;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --bg: #0E1729; --surface: #16223B; --ink: #E5EBF5; --muted: #919EB8;
-      --line: #24324F; --accent: #5CC3B0; color-scheme: dark;
+      --bg: #0A1222; --tile: #131F36; --tile-2: #1A2843; --ink: #E5EBF5; --muted: #95A2BB; --line: #24324F;
+      --accent: #5CC3B0; --c-audio: #5CC3B0; --c-llm: #8EA2F0; --c-systems: #F0CF5A; color-scheme: dark;
     }
   }
   :root[data-theme="dark"] {
-    --bg: #0E1729; --surface: #16223B; --ink: #E5EBF5; --muted: #919EB8;
-    --line: #24324F; --accent: #5CC3B0; color-scheme: dark;
+    --bg: #0A1222; --tile: #131F36; --tile-2: #1A2843; --ink: #E5EBF5; --muted: #95A2BB; --line: #24324F;
+    --accent: #5CC3B0; --c-audio: #5CC3B0; --c-llm: #8EA2F0; --c-systems: #F0CF5A; color-scheme: dark;
   }
-  @media (max-width: 640px) { :root { --hw: 104px; } }
 
   * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
-  body { margin: 0; background: var(--bg); color: var(--ink); font: 400 1.0625rem/1.6 var(--font); -webkit-font-smoothing: antialiased; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 400 1rem/1.55 var(--font); -webkit-font-smoothing: antialiased; }
   a { color: var(--accent); text-underline-offset: 3px; text-decoration-thickness: 1px; }
   a:hover { text-decoration-thickness: 2px; }
-  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 3px; }
-  h1, h2, h3 { margin: 0; line-height: 1.08; }
-  p { margin: 0 0 1em; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+  h1, h2, h3 { margin: 0; line-height: 1.1; }
+  p { margin: 0 0 .8em; }
   button { font: inherit; }
-  .wrap { max-width: 1240px; margin: 0 auto; padding: 0 16px; }
-  @media (min-width: 720px) { .wrap { padding: 0 32px; } }
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 0 14px 40px; }
+  @media (min-width: 720px) { .wrap { padding: 0 28px 56px; } }
 
-  /* Header */
-  .top { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 0; }
+  .top { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 2px; }
   .mark { font-weight: 700; font-stretch: 112%; color: var(--ink); text-decoration: none; }
-  .top nav { display: flex; align-items: center; gap: 22px; font-size: .95rem; }
-  .top nav .links { display: none; gap: 22px; }
-  @media (min-width: 760px) { .top nav .links { display: flex; } }
-  .top nav a { color: var(--muted); text-decoration: none; }
-  .top nav a:hover { color: var(--ink); }
-  .toggle { color: var(--ink); background: none; cursor: pointer; border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; }
+  .toggle { color: var(--ink); background: var(--tile); cursor: pointer; border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; }
+
+  /* ---------- Bento grid ---------- */
+  .bento { display: grid; gap: 14px; grid-template-columns: 1fr; }
+  @media (min-width: 760px) { .bento { grid-template-columns: repeat(6, 1fr); } }
+  @media (min-width: 1100px) { .bento { grid-template-columns: repeat(12, 1fr); } }
+  .tile { background: var(--tile); border: 1px solid var(--line); border-radius: var(--r); padding: 22px; min-width: 0; }
+  .tile h2 { font-size: 1.05rem; font-weight: 700; font-stretch: 108%; margin-bottom: 14px; }
+  .tile-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .tile-head h2 { margin: 0; }
+  .dark { background: var(--panel); border-color: var(--panel-line); color: var(--panel-ink); }
+  .dark h2 { color: var(--panel-ink); }
+
+  /* Placement: mobile stacks in source order; tablet 6 columns; desktop 12 columns */
+  @media (min-width: 760px) {
+    .t-intro { grid-column: span 6; }
+    .t-result, .t-now { grid-column: span 3; }
+    .t-signal { grid-column: span 6; }
+    .t-projects { grid-column: span 6; }
+    .t-exp { grid-column: span 6; }
+    .t-edu, .t-pubs { grid-column: span 3; }
+    .t-quiz { grid-column: span 6; }
+    .t-skills { grid-column: span 6; }
+    .t-contact { grid-column: span 6; }
+  }
+  @media (min-width: 1100px) {
+    .t-intro { grid-column: 1 / span 7; grid-row: span 2; }
+    .t-result { grid-column: 8 / span 5; }
+    .t-now { grid-column: 8 / span 5; }
+    .t-signal { grid-column: 1 / span 8; }
+    .t-contact { grid-column: 9 / span 4; }
+    .t-projects { grid-column: 1 / span 12; }
+    .t-exp { grid-column: 1 / span 7; grid-row: span 2; }
+    .t-edu { grid-column: 8 / span 5; }
+    .t-pubs { grid-column: 8 / span 5; }
+    .t-quiz { grid-column: 1 / span 7; }
+    .t-skills { grid-column: 8 / span 5; }
+  }
 
   /* Intro */
-  .intro { display: grid; gap: 20px 48px; padding: 24px 0 36px; align-items: end; }
-  @media (min-width: 900px) { .intro { grid-template-columns: 1.25fr 1fr; padding: 40px 0 44px; } }
-  .intro h1 { font-size: clamp(2.4rem, 6.6vw, 4.8rem); font-weight: 800; font-stretch: 125%; letter-spacing: -0.03em; line-height: .95; }
-  .lead { font-size: clamp(1.2rem, 2.2vw, 1.5rem); line-height: 1.35; font-weight: 500; margin: 18px 0 0; max-width: 32ch; }
-  .status { color: var(--muted); margin: 0 0 18px; max-width: 46ch; }
+  .t-intro { display: flex; flex-direction: column; justify-content: space-between; gap: 28px; padding: 28px; }
+  .t-intro h1 { font-size: clamp(2.5rem, 5.4vw, 4.7rem); font-weight: 800; font-stretch: 125%; letter-spacing: -0.03em; line-height: .93; }
+  @media (max-width: 520px) { .t-intro h1 { font-size: 2.15rem; font-stretch: 112%; } }
+  .lead { font-size: clamp(1.15rem, 2vw, 1.45rem); line-height: 1.35; font-weight: 500; margin: 18px 0 0; max-width: 32ch; }
+  .status { color: var(--muted); max-width: 52ch; margin-bottom: 16px; }
   .actions { display: flex; flex-wrap: wrap; gap: 10px; }
-  .btn { display: inline-block; padding: 10px 18px; border-radius: 999px; text-decoration: none; border: 1px solid var(--line); color: var(--ink); font-weight: 500; }
+  .btn { display: inline-block; padding: 10px 18px; border-radius: 999px; text-decoration: none; border: 1px solid var(--line); color: var(--ink); font-weight: 500; background: var(--tile); }
   .btn:hover { border-color: var(--accent); }
-  .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--tile); }
 
-  /* ---------- Session window ---------- */
-  .session { background: var(--panel); color: var(--panel-ink); border-radius: 18px; overflow: hidden; box-shadow: 0 1px 0 var(--panel-line) inset; }
-  .bar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; padding: 12px 16px; background: var(--panel-2); border-bottom: 1px solid var(--panel-line); }
-  .bar .file { font-weight: 600; font-stretch: 110%; margin-right: auto; }
-  .transport { display: flex; align-items: center; gap: 6px; }
-  .tbtn {
-    width: 38px; height: 32px; display: grid; place-items: center; cursor: pointer;
-    color: var(--panel-ink); background: var(--panel-3); border: 1px solid var(--panel-line); border-radius: 8px;
+  /* Result */
+  .venue { color: var(--accent); font-weight: 600; font-size: .92rem; }
+  .eer { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; margin: 8px 0 10px; }
+  .eer strong { font-size: clamp(2.6rem, 5vw, 3.6rem); font-weight: 800; font-stretch: 122%; color: var(--accent); line-height: 1; }
+  .eer span { color: var(--muted); font-size: .92rem; max-width: 26ch; }
+  .ptitle { font-weight: 600; margin-bottom: 10px; }
+  .plinks { display: flex; gap: 18px; font-weight: 600; }
+  .linkbtn { background: none; border: 0; padding: 0; cursor: pointer; color: var(--accent); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  .linkbtn:hover { text-decoration-thickness: 2px; }
+
+  /* Now */
+  .now-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  .now-list li { display: grid; grid-template-columns: 10px 1fr; gap: 10px; align-items: start; }
+  .now-list i { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); margin-top: 8px; }
+  .now-list b { font-weight: 600; }
+  .now-list span { color: var(--muted); display: block; font-size: .92rem; }
+
+  /* Live signal */
+  .t-signal { padding: 18px 20px 16px; }
+  .sig-head { display: flex; justify-content: space-between; gap: 12px; font-size: .88rem; color: var(--panel-muted); margin-bottom: 10px; }
+  .sig-head .live { display: inline-flex; align-items: center; gap: 8px; color: var(--panel-ink); font-weight: 600; }
+  .sig-head .live::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #5CC3B0; }
+  #spec { display: block; width: 100%; height: 190px; border-radius: 8px; }
+  #strip { display: block; width: 100%; height: 26px; margin-top: 6px; }
+  .sig-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 18px; margin-top: 8px; font-size: .85rem; color: var(--panel-muted); }
+  .legend { display: flex; gap: 16px; }
+  .legend i { display: inline-block; width: 16px; height: 6px; border-radius: 3px; margin-right: 6px; vertical-align: middle; }
+
+  /* Contact */
+  .t-contact { background: var(--ink); border-color: var(--ink); color: var(--bg); display: flex; flex-direction: column; justify-content: space-between; gap: 18px; }
+  .t-contact h2 { color: var(--bg); }
+  .t-contact .mail { font-size: clamp(1.15rem, 1.9vw, 1.45rem); font-weight: 700; font-stretch: 110%; color: var(--bg); word-break: break-word; }
+  .t-contact p { color: color-mix(in srgb, var(--bg) 72%, var(--ink)); margin: 0; }
+  .t-contact .row-links { display: flex; flex-wrap: wrap; gap: 16px; }
+  .t-contact .row-links a { color: var(--bg); font-weight: 600; }
+
+  /* Projects */
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip { font-size: .88rem; color: var(--ink); background: none; cursor: pointer; border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; }
+  .chip[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--tile); }
+  .pgrid { display: grid; gap: 12px; grid-template-columns: 1fr; }
+  @media (min-width: 620px) { .pgrid { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 1100px) { .pgrid { grid-template-columns: repeat(3, 1fr); } }
+  .pcard {
+    text-align: left; cursor: pointer; color: var(--ink); background: var(--tile-2); border: 1px solid transparent;
+    border-radius: 14px; padding: 16px 16px 14px; display: flex; flex-direction: column; gap: 8px; min-height: 150px;
   }
-  .tbtn:hover { border-color: var(--t-research); }
-  .tbtn.play { width: 46px; background: var(--t-research); border-color: var(--t-research); color: var(--panel); }
-  .tbtn svg { width: 14px; height: 14px; fill: currentColor; }
-  .readout { font-variant-numeric: tabular-nums; background: var(--panel); border: 1px solid var(--panel-line); border-radius: 8px; padding: 4px 12px; min-width: 104px; text-align: center; }
-  .hint { color: var(--panel-muted); font-size: .85rem; }
+  .pcard:hover { border-color: var(--c); }
+  .pcard[hidden] { display: none; }
+  .pcard .ptop { display: flex; justify-content: space-between; gap: 10px; font-size: .82rem; color: var(--muted); }
+  .pcard .ptop b { color: var(--c); font-weight: 600; }
+  .pcard h3 { font-size: 1.05rem; font-weight: 700; line-height: 1.25; }
+  .pcard p { color: var(--muted); font-size: .92rem; margin: 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .pcard .more { margin-top: auto; font-size: .85rem; font-weight: 600; color: var(--accent); }
 
-  .editor { display: grid; }
-  .scroller { overflow-x: auto; overscroll-behavior-x: contain; }
-  .rows { position: relative; min-width: 980px; padding-bottom: 6px; }
-  .row { display: grid; grid-template-columns: var(--hw) 1fr; border-bottom: 1px solid var(--panel-line); }
-  .head {
-    position: sticky; left: 0; z-index: 3; background: var(--panel-2); border-right: 1px solid var(--panel-line);
-    padding: 8px 10px; display: flex; flex-direction: column; justify-content: center; gap: 6px; font-size: .9rem;
+  /* Experience */
+  .xlist { list-style: none; margin: 0; padding: 0; }
+  .xlist li + li { border-top: 1px solid var(--line); }
+  .xrow {
+    width: 100%; text-align: left; cursor: pointer; color: var(--ink); background: none; border: 0;
+    display: grid; grid-template-columns: 1fr auto; gap: 2px 16px; padding: 13px 4px;
   }
-  .head .name { display: flex; align-items: center; gap: 8px; font-weight: 600; }
-  .head .name i { width: 9px; height: 9px; border-radius: 2px; flex: none; }
-  .ms { display: flex; gap: 4px; }
-  .ms button {
-    width: 24px; height: 20px; padding: 0; font-size: .72rem; font-weight: 700; cursor: pointer;
-    color: var(--panel-muted); background: var(--panel); border: 1px solid var(--panel-line); border-radius: 4px;
-  }
-  .ms button[aria-pressed="true"].m { background: #6B3A3A; color: #FFD9D9; border-color: #8A4C4C; }
-  .ms button[aria-pressed="true"].s { background: var(--t-industry); color: var(--panel); border-color: var(--t-industry); }
-  .lane { position: relative; }
-  .row.dim .lane { opacity: .22; }
+  .xrow:hover .xt { color: var(--accent); }
+  .xt { font-weight: 700; }
+  .xo { color: var(--muted); font-size: .92rem; grid-column: 1; }
+  .xw { color: var(--muted); font-size: .88rem; text-align: right; white-space: nowrap; grid-row: 1; grid-column: 2; }
+  .xbar { grid-column: 1 / -1; height: 4px; border-radius: 2px; background: var(--tile-2); position: relative; margin-top: 8px; }
+  .xbar i { position: absolute; top: 0; bottom: 0; border-radius: 2px; background: var(--accent); }
+  .xscale { display: flex; justify-content: space-between; color: var(--muted); font-size: .78rem; margin-top: 10px; }
+  @media (max-width: 520px) { .xrow { grid-template-columns: 1fr; } .xw { grid-row: auto; grid-column: 1; text-align: left; } }
 
-  /* Ruler */
-  .ruler .lane { height: 30px; cursor: pointer; background: var(--panel-2); }
-  .ruler .head { padding: 0 10px; color: var(--panel-muted); font-size: .8rem; }
-  .tick { position: absolute; top: 0; bottom: 0; border-left: 1px solid var(--panel-line); padding-left: 5px; font-size: .78rem; color: var(--panel-muted); line-height: 30px; }
+  /* Education, publications */
+  .edu { display: grid; gap: 14px; }
+  .edu b { display: block; font-weight: 700; }
+  .edu span { color: var(--muted); font-size: .92rem; }
+  .pubs { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+  .pubs b { display: block; font-weight: 600; line-height: 1.3; }
+  .pubs span { color: var(--muted); font-size: .88rem; }
 
-  /* Master track */
-  .master .lane { padding: 8px 0 6px; }
-  .master canvas { display: block; width: 100%; }
-  #spec { height: 84px; }
-  #strip { height: 22px; margin-top: 4px; }
-
-  /* Clips */
-  .grid-lines { position: absolute; inset: 0; pointer-events: none;
-    background-image: linear-gradient(to right, var(--panel-line) 1px, transparent 1px);
-    background-size: calc(100% / 11) 100%; opacity: .45; }
-  .clip {
-    position: absolute; height: 26px; padding: 0 8px; border: 0; cursor: pointer; text-align: left;
-    color: var(--panel-ink); font-size: .8rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-    background: color-mix(in srgb, var(--c) 20%, var(--panel)); border-left: 3px solid var(--c); border-radius: 5px;
-  }
-  .clip canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; opacity: .55; }
-  .clip span { position: relative; }
-  .clip:hover { background: color-mix(in srgb, var(--c) 32%, var(--panel)); }
-  .clip.on { box-shadow: inset 0 0 0 1px var(--c); }
-  .clip[aria-pressed="true"] { background: color-mix(in srgb, var(--c) 42%, var(--panel)); box-shadow: 0 0 0 2px var(--c); z-index: 2; }
-  .clip.tiny span { display: none; }
-  .marker {
-    position: absolute; width: 16px; height: 16px; padding: 0; border: 0; cursor: pointer;
-    background: var(--c); transform: translate(-50%, 0) rotate(45deg); border-radius: 2px;
-  }
-  .marker[aria-pressed="true"] { box-shadow: 0 0 0 3px var(--panel), 0 0 0 5px var(--c); }
-  .marker + .mlabel { position: absolute; font-size: .75rem; color: var(--panel-muted); white-space: nowrap; pointer-events: none; }
-
-  .playhead, .now { position: absolute; top: 0; bottom: 0; width: 0; pointer-events: none; z-index: 4; }
-  .playhead { border-left: 2px solid #FF7A6B; }
-  .playhead::before { content: ""; position: absolute; top: 0; left: -7px; border: 6px solid transparent; border-top: 9px solid #FF7A6B; }
-  .now { border-left: 1px dashed var(--panel-muted); z-index: 1; }
-  .now span { position: absolute; top: 7px; right: 5px; font-size: .72rem; color: var(--panel-muted); background: var(--panel-2); padding: 0 4px; }
-
-  /* Inspector */
-  .inspector { border-top: 1px solid var(--panel-line); background: var(--panel-2); padding: 18px 20px 22px; min-height: 230px; }
-  @media (min-width: 900px) {
-    #insBody { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: 0 40px; }
-    #insBody .ins-a { grid-column: 1; } #insBody .ins-b { grid-column: 2; grid-row: 1 / span 6; }
-  }
-  .ins-label { color: var(--panel-muted); font-size: .8rem; margin-bottom: 14px; }
-  .ins-track { display: inline-flex; align-items: center; gap: 8px; font-size: .85rem; color: var(--panel-muted); }
-  .ins-track i { width: 9px; height: 9px; border-radius: 2px; }
-  .inspector h3 { font-size: 1.3rem; font-weight: 700; font-stretch: 106%; margin: 8px 0 4px; line-height: 1.2; }
-  .ins-org { color: var(--panel-muted); margin-bottom: 4px; }
-  .ins-when { font-size: .9rem; margin-bottom: 12px; color: var(--c); font-weight: 600; }
-  .inspector p { font-size: .98rem; }
-  .stat { display: flex; align-items: baseline; gap: 12px; margin: 4px 0 14px; }
-  .stat strong { font-size: 2.2rem; font-weight: 800; font-stretch: 118%; color: var(--t-research); line-height: 1; }
-  .stat span { font-size: .9rem; color: var(--panel-muted); }
-  .itags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
-  .itags span { background: var(--panel-3); border-radius: 6px; padding: 1px 8px; font-size: .85rem; color: var(--panel-muted); }
-  .ilinks { display: flex; flex-wrap: wrap; gap: 16px; font-weight: 600; }
-  .ilinks a { color: var(--t-research); }
-  .session-foot { padding: 10px 16px; font-size: .85rem; color: var(--panel-muted); border-top: 1px solid var(--panel-line); }
-
-  /* Sections */
-  .sec { border-top: 1px solid var(--line); padding: 56px 0; display: grid; gap: 20px; }
-  .session-wrap { padding-bottom: 56px; }
-  @media (min-width: 900px) { .sec { grid-template-columns: 220px 1fr; gap: 48px; padding: 72px 0; } }
-  .sec h2 { font-size: 1.7rem; font-weight: 700; font-stretch: 115%; }
-  .sec .body { max-width: 760px; min-width: 0; }
-  .sec .wide { max-width: none; }
-
-  /* Spot the fake */
-  .game-intro { font-size: 1.15rem; max-width: 52ch; }
-  .pair { display: grid; gap: 16px; margin: 20px 0; }
-  @media (min-width: 680px) { .pair { grid-template-columns: 1fr 1fr; } }
-  .qclip { background: var(--panel); border-radius: 16px; padding: 14px; color: var(--panel-ink); }
-  .clip-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-weight: 600; }
-  .qclip canvas { display: block; width: 100%; height: 180px; border-radius: 6px; }
-  .qclip button { font-weight: 500; font-size: .9rem; cursor: pointer; color: var(--panel-ink); background: none; border: 1px solid #33456A; border-radius: 999px; padding: 5px 14px; }
-  .qclip button:hover:not(:disabled) { border-color: var(--t-industry); color: var(--t-industry); }
+  /* Quiz */
+  .t-quiz .intro-q { color: var(--panel-muted); margin-bottom: 12px; }
+  .pair { display: grid; gap: 12px; }
+  @media (min-width: 560px) { .pair { grid-template-columns: 1fr 1fr; } }
+  .qclip { background: var(--panel-2); border-radius: 12px; padding: 10px; }
+  .clip-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-weight: 600; font-size: .92rem; }
+  .qclip canvas { display: block; width: 100%; height: 150px; border-radius: 6px; }
+  @media (min-width: 1100px) { .t-quiz { display: flex; flex-direction: column; } .t-quiz .pair { flex: 1; } .qclip { display: flex; flex-direction: column; } .qclip canvas { flex: 1; min-height: 150px; height: auto; } }
+  .qclip button { font-weight: 500; font-size: .85rem; cursor: pointer; color: var(--panel-ink); background: none; border: 1px solid #33456A; border-radius: 999px; padding: 3px 12px; }
+  .qclip button:hover:not(:disabled) { border-color: var(--gold); color: var(--gold); }
   .qclip button:disabled { cursor: default; opacity: .5; }
-  .qclip.correct { box-shadow: 0 0 0 2px var(--t-industry); }
-  .verdict { min-height: 3.2em; }
-  .game-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; }
-  .again { font-weight: 500; cursor: pointer; color: var(--ink); background: none; border: 1px solid var(--line); border-radius: 999px; padding: 8px 16px; }
-  .again:hover { border-color: var(--accent); }
-  .tally { color: var(--muted); font-size: .95rem; }
+  .qclip.correct { box-shadow: 0 0 0 2px var(--gold); }
+  .verdict { min-height: 3em; margin: 12px 0 8px; font-size: .95rem; }
+  .game-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 20px; }
+  .again { font-weight: 500; cursor: pointer; color: var(--panel-ink); background: none; border: 1px solid #33456A; border-radius: 999px; padding: 6px 14px; }
+  .again:hover { border-color: #5CC3B0; }
+  .tally { color: var(--panel-muted); font-size: .9rem; }
 
-  /* Skills, list view, contact */
-  .skills { display: grid; gap: 18px 28px; margin: 0; }
-  @media (min-width: 720px) { .skills { grid-template-columns: 1fr 1fr 1fr; } }
-  .skills dt { font-weight: 700; margin-bottom: 4px; }
-  .skills dd { margin: 0; color: var(--muted); }
-  details.all summary { cursor: pointer; font-weight: 600; color: var(--accent); }
-  .list-group h3 { font-size: 1.15rem; font-weight: 700; font-stretch: 110%; margin: 28px 0 8px; }
-  .list-group ul { list-style: none; margin: 0; padding: 0; }
-  .list-group li { padding: 12px 0; border-top: 1px solid var(--line); }
-  .list-group .lt { font-weight: 700; }
-  .list-group .lm { color: var(--muted); font-size: .95rem; }
-  .list-group p { margin: 4px 0 0; }
-  .contact-line { font-size: clamp(1.5rem, 4.4vw, 2.6rem); font-weight: 700; font-stretch: 115%; margin-bottom: 16px; }
-  .contact-line a { word-break: break-word; }
-  footer { border-top: 1px solid var(--line); padding: 36px 0 56px; color: var(--muted); font-size: .9rem; }
+  /* Skills */
+  .sk { display: grid; gap: 12px; }
+  .sk dt { font-weight: 700; font-size: .92rem; margin-bottom: 4px; }
+  .sk dd { margin: 0; display: flex; flex-wrap: wrap; gap: 5px; }
+  .sk dd span { background: var(--tile-2); border-radius: 6px; padding: 1px 8px; font-size: .86rem; color: var(--muted); }
+
+  /* Detail dialog */
+  dialog {
+    width: min(620px, calc(100vw - 28px)); border: 1px solid var(--line); border-radius: var(--r);
+    padding: 0; background: var(--tile); color: var(--ink);
+  }
+  dialog::backdrop { background: rgba(8, 14, 28, .55); }
+  .dlg { padding: 24px 24px 22px; }
+  .dlg-top { display: flex; justify-content: space-between; align-items: start; gap: 16px; }
+  .dlg .kind { font-size: .85rem; font-weight: 600; color: var(--c); }
+  .dlg h3 { font-size: 1.4rem; font-weight: 700; font-stretch: 106%; margin: 6px 0 4px; line-height: 1.2; }
+  .dlg .org { color: var(--muted); }
+  .dlg .when { color: var(--muted); font-size: .92rem; margin-bottom: 14px; }
+  .dlg .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 12px; }
+  .dlg .tags span { background: var(--tile-2); border-radius: 6px; padding: 1px 8px; font-size: .86rem; color: var(--muted); }
+  .dlg .links { display: flex; gap: 18px; font-weight: 600; }
+  .close { flex: none; width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--line); background: none; color: var(--ink); cursor: pointer; font-size: 1.1rem; line-height: 1; }
+  .close:hover { border-color: var(--accent); }
+
+  footer { color: var(--muted); font-size: .88rem; padding: 26px 2px 0; }
 </style>
 </head>
 <body>
 <div class="wrap">
-
   <header class="top">
     <a class="mark" href="#">Mitul Bhattacharya</a>
-    <nav aria-label="Main">
-      <div class="links">
-        <a href="#session">Career</a>
-        <a href="#spot">Spot the fake</a>
-        <a href="#skills">Skills</a>
-        <a href="#contact">Contact</a>
-      </div>
-      <button class="toggle" id="themeToggle" type="button" aria-label="Switch colour theme">Dark</button>
-    </nav>
+    <button class="toggle" id="themeToggle" type="button" aria-label="Switch colour theme">Dark</button>
   </header>
 
-  <main>
-    <section class="intro">
+  <main class="bento">
+    <section class="tile t-intro" aria-label="Introduction">
       <div>
         <h1>Mitul<br>Bhattacharya</h1>
         <p class="lead">I build models that tell real audio from synthetic audio, and connect LLMs to the tools people already use.</p>
@@ -247,107 +251,104 @@
       </div>
     </section>
 
-    <section class="session-wrap" id="session" aria-label="Career timeline">
-      <div class="session">
-        <div class="bar">
-          <span class="file">career.session</span>
-          <div class="transport" role="group" aria-label="Timeline controls">
-            <button class="tbtn" id="prev" type="button" aria-label="Previous item"><svg viewBox="0 0 16 16"><path d="M3 2h2v12H3zM14 2v12L6 8z"/></svg></button>
-            <button class="tbtn play" id="play" type="button" aria-label="Play the timeline"><svg viewBox="0 0 16 16" id="playIcon"><path d="M4 2l10 6-10 6z"/></svg></button>
-            <button class="tbtn" id="next" type="button" aria-label="Next item"><svg viewBox="0 0 16 16"><path d="M11 2h2v12h-2zM2 2v12l8-6z"/></svg></button>
-          </div>
-          <span class="readout" id="readout" aria-live="off">May 2016</span>
-          <span class="hint">Press play, or click any clip. On a phone, swipe the tracks sideways.</span>
-        </div>
-
-        <div class="editor">
-          <div class="scroller">
-            <div class="rows" id="rows">
-              <div class="row ruler">
-                <div class="head">Year</div>
-                <div class="lane" id="ruler" aria-label="Timeline ruler, click to move the playhead"></div>
-              </div>
-              <div class="row master">
-                <div class="head"><span class="name"><i style="background:var(--panel-muted)"></i>Master</span><span style="color:var(--panel-muted);font-size:.78rem">Live signal</span></div>
-                <div class="lane">
-                  <canvas id="spec" role="img" aria-label="A scrolling spectrogram of simulated speech. Real and synthetic utterances alternate, and a strip below labels each one."></canvas>
-                  <canvas id="strip" aria-hidden="true"></canvas>
-                </div>
-              </div>
-              <!-- Track rows are added here by the script -->
-              <div class="playhead" id="playhead" aria-hidden="true"></div>
-              <div class="now" id="now" aria-hidden="true"><span>Now</span></div>
-            </div>
-          </div>
-
-          <aside class="inspector" id="inspector" aria-live="polite">
-            <div class="ins-label">Inspector</div>
-            <div id="insBody"></div>
-          </aside>
-        </div>
-        <div class="session-foot">The master track is simulated speech generated in your browser; synthetic utterances show the cut-off highs and flat pitch that give many vocoders away. It illustrates the cues detectors learn, not a live model.</div>
+    <section class="tile t-result" aria-label="Featured result">
+      <div class="venue">EUSIPCO 2026, accepted</div>
+      <div class="eer"><strong>2.48% EER</strong><span>on EnvSDD, an 81% relative improvement over the strongest baseline (13.20%)</span></div>
+      <p class="ptitle">Beyond the Seen: Environmental Sound Deepfake Detection Across Unseen Generators</p>
+      <div class="plinks">
+        <button type="button" class="linkbtn" data-open="eusipco">Details</button>
+        <a href="https://eurasip.org/Proceedings/Eusipco/Eusipco2026/pdfs/0000226.pdf">Paper</a>
+        <a href="https://github.com/Mitulb188/EnvSDD">Code</a>
       </div>
     </section>
 
-    <section class="sec" id="spot">
+    <section class="tile t-now" aria-label="Current roles">
+      <h2>Right now</h2>
+      <ul class="now-list" id="nowList"></ul>
+    </section>
+
+    <section class="tile dark t-signal" aria-label="Live spectrogram">
+      <div class="sig-head"><span class="live">Simulated speech, live</span><span>0 to 8 kHz</span></div>
+      <canvas id="spec" role="img" aria-label="A scrolling spectrogram of simulated speech. Real and synthetic utterances alternate, and a strip below labels each one."></canvas>
+      <canvas id="strip" aria-hidden="true"></canvas>
+      <div class="sig-foot">
+        <span>Generated in your browser. It illustrates the cues detectors learn; it is not a live model.</span>
+        <span class="legend" aria-hidden="true"><span><i style="background:#5CC3B0"></i>Real</span><span><i style="background:#F0CF5A"></i>Synthetic</span></span>
+      </div>
+    </section>
+
+    <section class="tile t-contact" aria-label="Contact">
+      <h2>Get in touch</h2>
+      <a class="mail" href="mailto:mitulb188@gmail.com">mitulb188@gmail.com</a>
+      <p>Happy to talk about speech and audio forensics, applied LLMs, or a role on your team. Based in Stuttgart, Germany.</p>
+      <div class="row-links">
+        <a href="assets/cv.pdf">CV</a>
+        <a href="https://github.com/Mitulb188">GitHub</a>
+        <a href="https://www.linkedin.com/in/mrityunjoy-bhattacharya-04025b124/">LinkedIn</a>
+      </div>
+    </section>
+
+    <section class="tile t-projects" aria-label="Projects">
+      <div class="tile-head">
+        <h2>Projects</h2>
+        <div class="chips" role="group" aria-label="Filter projects">
+          <button class="chip" type="button" data-filter="all" aria-pressed="true">All</button>
+          <button class="chip" type="button" data-filter="audio" aria-pressed="false">Audio and speech</button>
+          <button class="chip" type="button" data-filter="llm" aria-pressed="false">LLMs and NLP</button>
+          <button class="chip" type="button" data-filter="systems" aria-pressed="false">Web and IoT systems</button>
+        </div>
+      </div>
+      <div class="pgrid" id="pgrid"></div>
+    </section>
+
+    <section class="tile t-exp" aria-label="Experience">
+      <h2>Experience</h2>
+      <ul class="xlist" id="xlist"></ul>
+      <div class="xscale" aria-hidden="true"><span>2018</span><span>2020</span><span>2022</span><span>2024</span><span>Now</span></div>
+    </section>
+
+    <section class="tile t-edu" aria-label="Education">
+      <h2>Education</h2>
+      <div class="edu" id="edu"></div>
+    </section>
+
+    <section class="tile t-pubs" aria-label="Publications">
+      <h2>Publications</h2>
+      <ul class="pubs" id="pubs"></ul>
+    </section>
+
+    <section class="tile dark t-quiz" id="spot" aria-label="Spot the fake">
       <h2>Spot the fake</h2>
-      <div class="body wide">
-        <p class="game-intro">One of these clips is synthetic speech. Which one?</p>
-        <div class="pair">
-          <div class="qclip" id="clipA">
-            <div class="clip-head"><span>Clip A</span><button type="button" data-pick="0">A is the fake</button></div>
-            <canvas aria-label="Spectrogram of clip A"></canvas>
-          </div>
-          <div class="qclip" id="clipB">
-            <div class="clip-head"><span>Clip B</span><button type="button" data-pick="1">B is the fake</button></div>
-            <canvas aria-label="Spectrogram of clip B"></canvas>
-          </div>
+      <p class="intro-q">One of these clips is synthetic speech. Which one?</p>
+      <div class="pair">
+        <div class="qclip" id="clipA">
+          <div class="clip-head"><span>Clip A</span><button type="button" data-pick="0">A is the fake</button></div>
+          <canvas aria-label="Spectrogram of clip A"></canvas>
         </div>
-        <p class="verdict" id="verdict" aria-live="polite"></p>
-        <div class="game-foot">
-          <button class="again" id="again" type="button">Try another pair</button>
-          <span class="tally" id="tally"></span>
+        <div class="qclip" id="clipB">
+          <div class="clip-head"><span>Clip B</span><button type="button" data-pick="1">B is the fake</button></div>
+          <canvas aria-label="Spectrogram of clip B"></canvas>
         </div>
+      </div>
+      <p class="verdict" id="verdict" aria-live="polite"></p>
+      <div class="game-foot">
+        <button class="again" id="again" type="button">Try another pair</button>
+        <span class="tally" id="tally"></span>
       </div>
     </section>
 
-    <section class="sec" id="skills">
+    <section class="tile t-skills" aria-label="Skills">
       <h2>Skills</h2>
-      <div class="body">
-        <dl class="skills">
-          <div><dt>Speech and audio</dt><dd>BEATs, AASIST, CQCC, prosodic feature extraction, speech-to-text and text-to-speech pipelines</dd></div>
-          <div><dt>LLMs and NLP</dt><dd>LangChain, RAG, LLM API integration (Claude, Gemini; cloud and local), Chroma, BERT, Sentence Transformers, LLM fine-tuning, Claude Code</dd></div>
-          <div><dt>Machine learning</dt><dd>PyTorch, TensorFlow, Hugging Face Transformers, scikit-learn, Pandas, NumPy, OpenCV</dd></div>
-          <div><dt>Programming</dt><dd>Python, SQL (PostgreSQL), Java, C++</dd></div>
-          <div><dt>Engineering</dt><dd>REST APIs, WebSockets, HTML, CSS, JavaScript, Docker, Git, Splunk, ServiceNow</dd></div>
-          <div><dt>Languages</dt><dd>English (C1), German (A2, improving), Hindi and Bengali (native)</dd></div>
-        </dl>
-      </div>
-    </section>
-
-    <section class="sec" id="list">
-      <h2>Everything at once</h2>
-      <div class="body">
-        <details class="all">
-          <summary>Read the full timeline as a list</summary>
-          <div id="listView"></div>
-        </details>
-      </div>
-    </section>
-
-    <section class="sec" id="contact">
-      <h2>Contact</h2>
-      <div class="body">
-        <p class="contact-line"><a href="mailto:mitulb188@gmail.com">mitulb188@gmail.com</a></p>
-        <p>Happy to talk about speech and audio forensics, applied LLMs, or a role on your team. Based in Stuttgart, Germany.</p>
-      </div>
+      <dl class="sk" id="skills"></dl>
     </section>
   </main>
 
-  <footer>
-    The spectrograms on this page are synthesised in your browser from harmonics, formants and noise. No audio is recorded or uploaded.
-  </footer>
+  <footer>The spectrograms on this page are synthesised in your browser from harmonics, formants and noise. No audio is recorded or uploaded.</footer>
 </div>
+
+<dialog id="detail" aria-labelledby="dlgTitle">
+  <div class="dlg" id="dlgBody"></div>
+</dialog>
 
 <script>
 /* ---------- Theme toggle ---------- */
@@ -610,22 +611,13 @@ const FONT = '"Archivo", system-ui, sans-serif';
   newPair();
 })();
 
-/* ---------- Career session: tracks, clips, playhead, inspector ---------- */
+/* ---------- Bento: content data and tiles ---------- */
 (function () {
-  const START = 2016, END = 2027, SPAN = END - START;
   const today = new Date();
   const NOW = today.getFullYear() + today.getMonth() / 12 + today.getDate() / 365;
-  const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   const startOf = s => { const [y, m] = s.split('-').map(Number); return y + (m - 1) / 12; };
   const endOf = s => s === 'now' ? NOW : (() => { const [y, m] = s.split('-').map(Number); return y + m / 12; })();
-
-  const TRACKS = [
-    { id: 'research',  name: 'Research',     color: '#5CC3B0' },
-    { id: 'industry',  name: 'Industry',     color: '#F0CF5A' },
-    { id: 'projects',  name: 'Projects',     color: '#8EA2F0' },
-    { id: 'pubs',      name: 'Publications', color: '#E8EDF7' },
-    { id: 'education', name: 'Education',    color: '#E39A7B' }
-  ];
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
   const ITEMS = [
     // Research roles
@@ -678,7 +670,7 @@ const FONT = '"Archivo", system-ui, sans-serif';
       title: 'Real-time climate monitoring for SciWalk', when: 'Built during the IABP role',
       body: 'A Raspberry Pi Zero system that streams readings from 5+ environmental sensors in real time, plus an Android app that shows live sensor data during SciWalk field sessions. Built at the IABP.',
       tags: ['Python', 'Raspberry Pi', 'Android'],
-      links: [{ label: 'Code', href: 'https://github.com/Mitulb188/SciWalkPrototype' }] },
+      links: [{ label: 'Code', href: 'https://github.tik.uni-stuttgart.de/st188987/SciWalkPrototype' }] },
 
     // Publications (point markers)
     { id: 'ipact', track: 'pubs', at: 2019.3, mark: '2019',
@@ -703,265 +695,111 @@ const FONT = '"Archivo", system-ui, sans-serif';
       body: 'Specialisation in applied NLP. Coursework includes Deep Learning for Speech and Text Processing, Foundation Models, Machine Translation and Machine Learning.' }
   ];
 
-  const trackOf = id => TRACKS.find(t => t.id === id);
+
   ITEMS.forEach(it => {
-    if (it.at != null) { it.t0 = it.at; it.t1 = it.at; }
-    else { it.t0 = startOf(it.s); it.t1 = endOf(it.e); }
-    it.color = trackOf(it.track).color;
+    if (it.at != null) { it.t0 = it.t1 = it.at; } else { it.t0 = startOf(it.s); it.t1 = endOf(it.e); }
   });
-  const ORDER = ITEMS.slice().sort((a, b) => a.t0 - b.t0 || TRACKS.indexOf(trackOf(a.track)) - TRACKS.indexOf(trackOf(b.track)));
-  const pct = t => (t - START) / SPAN;
+  const byId = id => ITEMS.find(i => i.id === id);
 
-  const rows = document.getElementById('rows');
-  const playhead = document.getElementById('playhead');
-  const nowEl = document.getElementById('now');
-  const readout = document.getElementById('readout');
-  const insBody = document.getElementById('insBody');
-  const scroller = rows.parentElement;
-  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const place = (el, p) => { el.style.left = `calc(var(--hw) + (100% - var(--hw)) * ${p})`; };
-  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  // Project categories (same filters as before)
+  const CAT = { music: 'audio', add: 'audio', rag: 'llm', vlm: 'llm', kg: 'systems llm', sciwalk: 'systems' };
+  const CATNAME = { audio: 'Audio and speech', llm: 'LLMs and NLP', systems: 'Web and IoT systems' };
+  const CATVAR = { audio: 'var(--c-audio)', llm: 'var(--c-llm)', systems: 'var(--c-systems)' };
+  const KIND = { research: 'Research role', industry: 'Industry', pubs: 'Publication', education: 'Education' };
 
-  /* Ruler */
-  const ruler = document.getElementById('ruler');
-  for (let y = START; y < END; y++) {
-    const tk = document.createElement('div');
-    tk.className = 'tick'; tk.style.left = (pct(y) * 100) + '%'; tk.textContent = y;
-    ruler.appendChild(tk);
-  }
-
-  /* Tracks */
-  const state = {};
-  const els = {};
-  TRACKS.forEach(tr => {
-    const items = ITEMS.filter(i => i.track === tr.id);
-    // Greedy lane assignment so overlapping clips stack
-    const laneEnds = [];
-    items.slice().sort((a, b) => a.t0 - b.t0).forEach(it => {
-      const a = it.at != null ? (pct(it.at) > 0.8 ? it.at - it.mark.length * 0.075 : it.at - 0.05) : it.t0;
-      const b = it.at != null ? (pct(it.at) > 0.8 ? it.at + 0.05 : it.at + it.mark.length * 0.075) : it.t1;
-      let L = laneEnds.findIndex(end => end <= a + 1e-6);
-      if (L < 0) { L = laneEnds.length; laneEnds.push(b); } else laneEnds[L] = b;
-      it.lane = L;
-    });
-    const lanes = Math.max(1, laneEnds.length);
-
-    const row = document.createElement('div');
-    row.className = 'row';
-    row.innerHTML = `
-      <div class="head">
-        <span class="name"><i style="background:${tr.color}"></i>${tr.name}</span>
-        <span class="ms">
-          <button type="button" class="m" aria-pressed="false" aria-label="Mute ${tr.name}">M</button>
-          <button type="button" class="s" aria-pressed="false" aria-label="Solo ${tr.name}">S</button>
-        </span>
-      </div>
-      <div class="lane" style="height:${lanes * 32 + 10}px"><div class="grid-lines"></div></div>`;
-    rows.insertBefore(row, playhead);
-    const lane = row.querySelector('.lane');
-    state[tr.id] = { mute: false, solo: false, row };
-
-    items.forEach(it => {
-      let el;
-      if (it.at != null) {
-        el = document.createElement('button');
-        el.className = 'marker';
-        el.style.left = (pct(it.at) * 100) + '%';
-        el.style.top = (9 + it.lane * 32) + 'px';
-        const lab = document.createElement('span');
-        lab.className = 'mlabel';
-        if (pct(it.at) > 0.8) { lab.style.right = `calc(${(1 - pct(it.at)) * 100}% + 12px)`; }
-        else { lab.style.left = `calc(${pct(it.at) * 100}% + 12px)`; }
-        lab.style.top = (8 + it.lane * 32) + 'px';
-        lab.textContent = it.mark;
-        lane.appendChild(el); lane.appendChild(lab);
-      } else {
-        el = document.createElement('button');
-        el.className = 'clip';
-        el.style.left = (pct(it.t0) * 100) + '%';
-        el.style.width = `max(12px, ${(pct(it.t1) - pct(it.t0)) * 100}%)`;
-        el.style.top = (5 + it.lane * 32) + 'px';
-        el.innerHTML = `<canvas aria-hidden="true"></canvas><span>${esc(it.label)}</span>`;
-        lane.appendChild(el);
-      }
-      el.type = 'button';
-      el.style.setProperty('--c', it.color);
-      el.setAttribute('aria-pressed', 'false');
-      el.title = it.label || it.mark;
-      el.setAttribute('aria-label', `${tr.name}: ${it.title}${it.org && it.track !== 'pubs' ? ', ' + it.org : ''}, ${it.when}`);
-      el.addEventListener('click', () => { stop(); select(it.id, true); });
-      els[it.id] = el;
-    });
-
-    const [mBtn, sBtn] = row.querySelectorAll('.ms button');
-    mBtn.addEventListener('click', () => { state[tr.id].mute = !state[tr.id].mute; mBtn.setAttribute('aria-pressed', state[tr.id].mute); applyDim(); });
-    sBtn.addEventListener('click', () => { state[tr.id].solo = !state[tr.id].solo; sBtn.setAttribute('aria-pressed', state[tr.id].solo); applyDim(); });
-  });
-
-  function applyDim() {
-    const anySolo = TRACKS.some(t => state[t.id].solo);
-    TRACKS.forEach(t => {
-      const s = state[t.id];
-      s.row.classList.toggle('dim', s.mute || (anySolo && !s.solo));
-    });
-  }
-  const audible = it => { const s = state[it.track]; const anySolo = TRACKS.some(t => state[t.id].solo); return !s.mute && (!anySolo || s.solo); };
-
-  /* Waveforms inside clips */
-  const hash = s => { let h = 2166136261; for (const ch of s) h = Math.imul(h ^ ch.charCodeAt(0), 16777619); return h >>> 0; };
-  function drawWaves() {
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    ITEMS.filter(i => i.at == null).forEach(it => {
-      const el = els[it.id], cv = el.querySelector('canvas');
-      const w = el.clientWidth, h = el.clientHeight;
-      el.classList.toggle('tiny', w < 56);
-      if (!w) return;
-      cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
-      const ctx = cv.getContext('2d');
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      ctx.fillStyle = it.color; ctx.globalAlpha = 0.35;
-      const rand = Synth.rng(hash(it.id)), n = Math.floor(w / 3);
-      let word = 0, left = 0;
-      for (let i = 0; i < n; i++) {
-        if (left <= 0) { word = rand() < 0.2 ? 0.08 : 0.3 + rand() * 0.6; left = 3 + (rand() * 10 | 0); }
-        left--;
-        const a = Math.max(0.06, word * (0.4 + 0.6 * rand())) * (h / 2 - 3);
-        ctx.fillRect(i * 3, h / 2 - a, 2, a * 2);
-      }
-    });
-  }
-
-  /* Inspector */
-  let selected = null;
-  function renderInspector(it) {
-    const tr = trackOf(it.track);
-    const tags = (it.tags || []).map(t => `<span>${esc(t)}</span>`).join('');
-    const links = (it.links || []).map(l => `<a href="${esc(l.href)}">${esc(l.label)}</a>`).join('');
-    insBody.style.setProperty('--c', it.color);
-    insBody.innerHTML = `
-      <div class="ins-a">
-        <span class="ins-track"><i style="background:${tr.color}"></i>${tr.name}</span>
-        <h3>${esc(it.title)}</h3>
-        ${it.org ? `<div class="ins-org">${esc(it.org)}</div>` : ''}
-        <div class="ins-when" style="color:${it.color}">${esc(it.when)}</div>
-        ${it.stat ? `<div class="stat"><strong>${esc(it.stat[0])}</strong><span>${esc(it.stat[1])}</span></div>` : ''}
-      </div>
-      <div class="ins-b">
-        ${it.body ? `<p>${esc(it.body)}</p>` : ''}
-        ${tags ? `<div class="itags">${tags}</div>` : ''}
-        ${links ? `<div class="ilinks">${links}</div>` : ''}
-      </div>`;
-  }
-  function select(id, movePlayhead) {
-    const it = ITEMS.find(i => i.id === id);
-    if (!it || it === selected) { if (it && movePlayhead) setT(it.t0); return; }
-    if (selected) els[selected.id].setAttribute('aria-pressed', 'false');
-    selected = it;
-    els[id].setAttribute('aria-pressed', 'true');
-    renderInspector(it);
-    if (movePlayhead) setT(it.t0);
-  }
-
-  /* Playhead */
-  let t = START + 4 / 12;
-  function label(tt) {
-    const y = Math.floor(tt), m = Math.min(11, Math.floor((tt - y) * 12 + 1e-6));
-    return `${MONTHS[m]} ${y}`;
-  }
-  function setT(tt) {
-    t = Math.max(START, Math.min(NOW, tt));
-    place(playhead, pct(t));
-    readout.textContent = label(t);
-    ITEMS.forEach(it => { if (it.at == null) els[it.id].classList.toggle('on', t >= it.t0 && t <= it.t1); });
-    // Keep the playhead in view when the timeline scrolls sideways
-    const hw = rows.querySelector('.head').offsetWidth;
-    const x = hw + (rows.clientWidth - hw) * pct(t);
-    if (x < scroller.scrollLeft + hw + 20 || x > scroller.scrollLeft + scroller.clientWidth - 40) {
-      scroller.scrollLeft = Math.max(0, x - scroller.clientWidth / 2);
-    }
-  }
-  function latestAt(tt) {
-    let pick = null;
-    for (const it of ORDER) { if (it.t0 <= tt + 1e-6 && audible(it)) pick = it; }
-    return pick;
-  }
-  place(nowEl, pct(NOW));
-
-  /* Transport */
-  const playBtn = document.getElementById('play');
-  const icon = document.getElementById('playIcon');
-  const PLAY = '<path d="M4 2l10 6-10 6z"/>', PAUSE = '<path d="M3 2h4v12H3zM9 2h4v12H9z"/>';
-  let raf = null, timer = null, last = 0;
-  const DURATION = 18; // seconds for the whole decade
-  function stop() {
-    if (raf) cancelAnimationFrame(raf); raf = null;
-    if (timer) clearInterval(timer); timer = null;
-    icon.innerHTML = PLAY; playBtn.setAttribute('aria-label', 'Play the timeline');
-  }
-  function play() {
-    if (t >= NOW - 0.02) setT(START);
-    icon.innerHTML = PAUSE; playBtn.setAttribute('aria-label', 'Pause the timeline');
-    if (reduced) {
-      timer = setInterval(() => { if (!step(1)) stop(); }, 1600);
-      step(1);
-      return;
-    }
-    last = performance.now();
-    const tick = now => {
-      const dt = (now - last) / 1000; last = now;
-      setT(t + dt * (NOW - START) / DURATION);
-      const it = latestAt(t); if (it) select(it.id, false);
-      if (t >= NOW) { stop(); return; }
-      raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-  }
-  function step(dir) {
-    const list = ORDER.filter(audible);
-    let i = selected ? list.indexOf(selected) : -1;
-    if (i < 0) i = dir > 0 ? -1 : list.length;
-    const nx = list[i + dir];
-    if (!nx) return false;
-    select(nx.id, true);
-    return true;
-  }
-  playBtn.addEventListener('click', () => (raf || timer) ? stop() : play());
-  document.getElementById('prev').addEventListener('click', () => { stop(); step(-1); });
-  document.getElementById('next').addEventListener('click', () => { stop(); step(1); });
-
-  // Click or drag on the ruler to scrub
-  let scrubbing = false;
-  const scrub = e => {
-    const r = ruler.getBoundingClientRect();
-    setT(START + Math.min(1, Math.max(0, (e.clientX - r.left) / r.width)) * SPAN);
-    const it = latestAt(t); if (it) select(it.id, false);
-  };
-  ruler.addEventListener('pointerdown', e => { stop(); scrubbing = true; ruler.setPointerCapture(e.pointerId); scrub(e); });
-  ruler.addEventListener('pointermove', e => { if (scrubbing) scrub(e); });
-  ruler.addEventListener('pointerup', () => { scrubbing = false; });
-
-  /* List view (same content, plain list) */
-  const listView = document.getElementById('listView');
-  const groups = [['research', 'Research roles'], ['industry', 'Industry'], ['pubs', 'Publications'], ['projects', 'Projects'], ['education', 'Education']];
-  listView.innerHTML = groups.map(([id, name]) => {
-    const items = ITEMS.filter(i => i.track === id).sort((a, b) => b.t0 - a.t0);
-    return `<div class="list-group"><h3>${name}</h3><ul>${items.map(it => `
-      <li><div class="lt">${esc(it.title)}</div>
-      <div class="lm">${it.org ? esc(it.org) + '. ' : ''}${esc(it.when)}</div>
-      ${it.stat ? `<p><strong>${esc(it.stat[0])}</strong> ${esc(it.stat[1])}.</p>` : ''}
-      ${it.body ? `<p>${esc(it.body)}</p>` : ''}
-      ${(it.links || []).length ? `<p>${it.links.map(l => `<a href="${esc(l.href)}">${esc(l.label)}</a>`).join('&emsp;')}</p>` : ''}</li>`).join('')}</ul></div>`;
+  /* Right now */
+  document.getElementById('nowList').innerHTML = ['tik', 'iabp', 'msc'].map(id => {
+    const it = byId(id);
+    return `<li><i></i><div><b>${esc(it.title)}</b><span>${esc(it.org)}</span></div></li>`;
   }).join('');
 
-  /* Start */
-  setT(t);
-  select('eusipco', false);
-  // On narrow screens open on the recent years, where most of the content is
-  scroller.scrollLeft = scroller.scrollWidth;
-  drawWaves();
-  let rt = null;
-  window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { drawWaves(); setT(t); }, 150); });
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(drawWaves);
+  /* Projects */
+  const pgrid = document.getElementById('pgrid');
+  const projects = ['add', 'rag', 'vlm', 'music', 'kg', 'sciwalk'].map(byId);
+  pgrid.innerHTML = projects.map(it => {
+    const cat = CAT[it.id].split(' ')[0];
+    return `<button type="button" class="pcard" data-open="${it.id}" data-tags="${CAT[it.id]}" style="--c:${CATVAR[cat]}">
+      <span class="ptop"><b>${CATNAME[cat]}</b><span>${esc(/^\d{4}$/.test(it.when) ? it.when : '')}</span></span>
+      <h3>${esc(it.title)}</h3>
+      <p>${esc(it.body)}</p>
+      <span class="more">Read more</span>
+    </button>`;
+  }).join('');
+  const chips = document.querySelectorAll('.chip');
+  chips.forEach(chip => chip.addEventListener('click', () => {
+    const f = chip.dataset.filter;
+    chips.forEach(c => c.setAttribute('aria-pressed', String(c === chip)));
+    pgrid.querySelectorAll('.pcard').forEach(card => { card.hidden = f !== 'all' && !card.dataset.tags.split(' ').includes(f); });
+  }));
+
+  /* Experience: newest first, with a bar showing when each role ran */
+  const S0 = 2018, span = NOW - S0;
+  const roles = ITEMS.filter(i => i.track === 'research' || i.track === 'industry').sort((a, b) => b.t0 - a.t0);
+  document.getElementById('xlist').innerHTML = roles.map(it => {
+    const l = Math.max(0, (it.t0 - S0) / span) * 100, w = Math.max(1.2, (it.t1 - it.t0) / span * 100);
+    return `<li><button type="button" class="xrow" data-open="${it.id}">
+      <span class="xt">${esc(it.title)}</span>
+      <span class="xw">${esc(it.when)}</span>
+      <span class="xo">${esc(it.org)}</span>
+      <span class="xbar" aria-hidden="true"><i style="left:${l}%;width:${w}%"></i></span>
+    </button></li>`;
+  }).join('');
+
+  /* Education */
+  document.getElementById('edu').innerHTML = ['msc', 'btech'].map(byId).map(it =>
+    `<div><b>${esc(it.title)}</b><span>${esc(it.org)}, ${esc(it.when)}</span><p style="margin:4px 0 0;font-size:.92rem">${esc(it.body)}</p></div>`).join('');
+
+  /* Publications */
+  document.getElementById('pubs').innerHTML = ['eusipco', 'eswc', 'icset', 'ipact'].map(byId).map(it => {
+    const link = (it.links || []).find(l => l.label === 'Paper');
+    return `<li><b>${esc(it.title)}</b><span>${esc(it.when)}${link ? ` &nbsp;<a href="${esc(link.href)}">Paper</a>` : ''}</span></li>`;
+  }).join('');
+
+  /* Skills */
+  const SKILLS = [
+    ['Speech and audio', ['BEATs', 'AASIST', 'CQCC', 'Prosodic feature extraction', 'Speech-to-text and text-to-speech pipelines']],
+    ['LLMs and NLP', ['LangChain', 'RAG', 'LLM API integration (Claude, Gemini; cloud and local)', 'Chroma', 'BERT', 'Sentence Transformers', 'LLM fine-tuning', 'Claude Code']],
+    ['Machine learning', ['PyTorch', 'TensorFlow', 'Hugging Face Transformers', 'scikit-learn', 'Pandas', 'NumPy', 'OpenCV']],
+    ['Programming', ['Python', 'SQL (PostgreSQL)', 'Java', 'C++']],
+    ['Engineering', ['REST APIs', 'WebSockets', 'HTML', 'CSS', 'JavaScript', 'Docker', 'Git', 'Splunk', 'ServiceNow']],
+    ['Languages', ['English (C1)', 'German (A2, improving)', 'Hindi (native)', 'Bengali (native)']]
+  ];
+  document.getElementById('skills').innerHTML = SKILLS.map(([k, v]) =>
+    `<div><dt>${k}</dt><dd>${v.map(x => `<span>${esc(x)}</span>`).join('')}</dd></div>`).join('');
+
+  /* Detail dialog */
+  const dlg = document.getElementById('detail'), body = document.getElementById('dlgBody');
+  function open(id) {
+    const it = byId(id); if (!it) return;
+    const cat = CAT[it.id] ? CAT[it.id].split(' ')[0] : null;
+    const kind = cat ? CATNAME[cat] : KIND[it.track];
+    const color = cat ? CATVAR[cat] : 'var(--accent)';
+    const tags = (it.tags || []).map(t => `<span>${esc(t)}</span>`).join('');
+    const links = (it.links || []).map(l => `<a href="${esc(l.href)}">${esc(l.label)}</a>`).join('');
+    body.style.setProperty('--c', color);
+    body.innerHTML = `
+      <div class="dlg-top">
+        <div>
+          <div class="kind">${esc(kind)}</div>
+          <h3 id="dlgTitle">${esc(it.title)}</h3>
+          ${it.org ? `<div class="org">${esc(it.org)}</div>` : ''}
+        </div>
+        <button type="button" class="close" aria-label="Close">&times;</button>
+      </div>
+      <div class="when">${esc(it.when)}</div>
+      ${it.stat ? `<div class="eer"><strong>${esc(it.stat[0])}</strong><span>${esc(it.stat[1])}</span></div>` : ''}
+      ${it.body ? `<p>${esc(it.body)}</p>` : ''}
+      ${tags ? `<div class="tags">${tags}</div>` : ''}
+      ${links ? `<div class="links">${links}</div>` : ''}`;
+    body.querySelector('.close').addEventListener('click', () => dlg.close());
+    if (typeof dlg.showModal === 'function') dlg.showModal(); else dlg.setAttribute('open', '');
+  }
+  document.addEventListener('click', e => {
+    const t = e.target.closest('[data-open]');
+    if (t) open(t.dataset.open);
+  });
+  // Clicking the dimmed backdrop closes the dialog
+  dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); });
 })();
 
 </script>
