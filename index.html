@@ -1,0 +1,789 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mitul Bhattacharya</title>
+<meta name="description" content="Mitul Bhattacharya: ML researcher working on audio deepfake detection, speech and NLP, and LLM integration.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F3F5F9;
+    --surface: #E7EBF2;
+    --ink: #121A2B;
+    --muted: #59657E;
+    --line: #D2D9E5;
+    --accent: #1E7A8A;
+    --gold: #A97F0E;
+    --panel: #0B1426;
+    --panel-ink: #DCE4F2;
+    --panel-muted: #8794AE;
+    --panel-accent: #5CC3B0;
+    --panel-gold: #F0CF5A;
+    --font: "Archivo", system-ui, sans-serif;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0E1729; --surface: #16223B; --ink: #E5EBF5; --muted: #919EB8;
+      --line: #24324F; --accent: #5CC3B0; --gold: #F0CF5A; color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0E1729; --surface: #16223B; --ink: #E5EBF5; --muted: #919EB8;
+    --line: #24324F; --accent: #5CC3B0; --gold: #F0CF5A; color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 400 1.0625rem/1.6 var(--font); font-stretch: 100%;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--accent); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  a:hover { text-decoration-thickness: 2px; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 3px; }
+  h1, h2, h3 { margin: 0; line-height: 1.08; }
+  p { margin: 0 0 1em; }
+  .wrap { max-width: 1160px; margin: 0 auto; padding: 0 16px; }
+  @media (min-width: 720px) { .wrap { padding: 0 32px; } }
+
+  /* Header */
+  .top { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 0; }
+  .mark { font-weight: 700; font-stretch: 112%; color: var(--ink); text-decoration: none; }
+  .top nav { display: flex; align-items: center; gap: 22px; font-size: .95rem; }
+  .top nav .links { display: none; gap: 22px; }
+  @media (min-width: 760px) { .top nav .links { display: flex; } }
+  .top nav a { color: var(--muted); text-decoration: none; }
+  .top nav a:hover { color: var(--ink); }
+  .toggle {
+    font: inherit; color: var(--ink); background: none; cursor: pointer;
+    border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px;
+  }
+
+  /* Hero */
+  .hero { padding: 32px 0 72px; }
+  .hero h1 {
+    font-size: clamp(2.5rem, 8.4vw, 6.4rem); font-weight: 800; font-stretch: 125%;
+    letter-spacing: -0.03em; line-height: .95;
+  }
+  .hero-row { display: grid; gap: 24px; margin: 28px 0 40px; align-items: end; }
+  @media (min-width: 900px) { .hero-row { grid-template-columns: 1.3fr 1fr; gap: 48px; } }
+  .lead { font-size: clamp(1.25rem, 2.4vw, 1.6rem); line-height: 1.35; font-weight: 500; margin: 0; max-width: 30ch; }
+  .status { color: var(--muted); margin: 0 0 18px; max-width: 46ch; }
+  .actions { display: flex; flex-wrap: wrap; gap: 10px; }
+  .btn {
+    display: inline-block; padding: 10px 18px; border-radius: 999px; text-decoration: none;
+    border: 1px solid var(--line); color: var(--ink); font-weight: 500;
+  }
+  .btn:hover { border-color: var(--accent); }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+
+  .scope { background: var(--panel); color: var(--panel-ink); border-radius: 20px; padding: 18px 18px 14px; }
+  @media (min-width: 720px) { .scope { padding: 22px 24px 16px; } }
+  .scope-head { display: flex; justify-content: space-between; gap: 12px; font-size: .9rem; color: var(--panel-muted); margin-bottom: 12px; }
+  .scope-head .live { display: inline-flex; align-items: center; gap: 8px; color: var(--panel-ink); }
+  .scope-head .live::before {
+    content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--panel-accent);
+  }
+  .plot { display: grid; grid-template-columns: 44px 1fr; gap: 8px; }
+  .axis { position: relative; font-size: .78rem; color: var(--panel-muted); }
+  .axis span { position: absolute; right: 0; transform: translateY(-50%); white-space: nowrap; }
+  .canvases canvas { display: block; width: 100%; }
+  #spec { height: 260px; border-radius: 8px; }
+  @media (max-width: 600px) { #spec { height: 190px; } }
+  #strip { height: 30px; margin-top: 8px; }
+  .legend { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 12px 0 0 52px; font-size: .85rem; color: var(--panel-muted); }
+  .legend i { display: inline-block; width: 18px; height: 6px; border-radius: 3px; margin-right: 6px; vertical-align: middle; }
+  .hero figcaption { color: var(--muted); font-size: .95rem; margin-top: 14px; max-width: 70ch; }
+
+  /* Sections */
+  .sec { border-top: 1px solid var(--line); padding: 56px 0; display: grid; gap: 20px; }
+  @media (min-width: 900px) { .sec { grid-template-columns: 220px 1fr; gap: 48px; padding: 72px 0; } }
+  .sec h2 { font-size: 1.7rem; font-weight: 700; font-stretch: 115%; }
+  .sec .body { max-width: 760px; min-width: 0; }
+  .sec .wide { max-width: none; }
+
+  /* Spot the fake */
+  .game-intro { font-size: 1.15rem; max-width: 52ch; }
+  .pair { display: grid; gap: 16px; margin: 20px 0; }
+  @media (min-width: 680px) { .pair { grid-template-columns: 1fr 1fr; } }
+  .clip { background: var(--panel); border-radius: 16px; padding: 14px; color: var(--panel-ink); }
+  .clip-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-weight: 600; }
+  .clip canvas { display: block; width: 100%; height: 180px; border-radius: 6px; }
+  .clip button {
+    font: inherit; font-weight: 500; font-size: .9rem; cursor: pointer; color: var(--panel-ink);
+    background: none; border: 1px solid #33456A; border-radius: 999px; padding: 5px 14px;
+  }
+  .clip button:hover:not(:disabled) { border-color: var(--panel-gold); color: var(--panel-gold); }
+  .clip button:disabled { cursor: default; opacity: .5; }
+  .clip.correct { box-shadow: 0 0 0 2px var(--panel-gold); }
+  .verdict { min-height: 3.2em; }
+  .verdict strong { font-weight: 700; }
+  .game-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; }
+  .again {
+    font: inherit; font-weight: 500; cursor: pointer; color: var(--ink); background: none;
+    border: 1px solid var(--line); border-radius: 999px; padding: 8px 16px;
+  }
+  .again:hover { border-color: var(--accent); }
+  .tally { color: var(--muted); font-size: .95rem; }
+
+  /* Research */
+  .paper { background: var(--surface); border-radius: 18px; padding: 24px; margin-bottom: 28px; }
+  @media (min-width: 720px) { .paper { padding: 32px; } }
+  .venue { color: var(--accent); font-weight: 600; margin-bottom: 8px; }
+  .paper h3 { font-size: clamp(1.35rem, 2.6vw, 1.8rem); font-weight: 700; font-stretch: 108%; margin-bottom: 12px; }
+  .authors { color: var(--muted); }
+  .result { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 18px; margin: 20px 0; }
+  .result strong { font-size: clamp(2.2rem, 5vw, 3rem); font-weight: 800; font-stretch: 120%; color: var(--accent); line-height: 1; }
+  .result span { max-width: 38ch; }
+  .plinks { display: flex; gap: 20px; font-weight: 500; }
+  .pubs { list-style: none; margin: 0; padding: 0; }
+  .pubs li { padding: 14px 0; border-top: 1px solid var(--line); color: var(--muted); }
+  .pubs .pub-title { display: block; color: var(--ink); font-weight: 600; }
+
+  /* Projects */
+  .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+  .chip {
+    font: inherit; font-size: .95rem; color: var(--ink); background: none; cursor: pointer;
+    border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px;
+  }
+  .chip[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+  .projects { list-style: none; margin: 0; padding: 0; }
+  .project { padding: 22px 0; border-bottom: 1px solid var(--line); }
+  .project:first-child { padding-top: 0; }
+  .project[hidden] { display: none; }
+  .project h3 { font-size: 1.3rem; font-weight: 700; margin-bottom: 8px; }
+  .project h3 .year { font-weight: 400; color: var(--muted); font-size: 1rem; margin-left: 6px; }
+  .wave { display: block; width: 100%; height: 36px; margin: 4px 0 12px; }
+  .project p { margin-bottom: 10px; }
+  .meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 16px; font-size: .92rem; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tags span { background: var(--surface); border-radius: 6px; padding: 1px 8px; color: var(--muted); }
+  .meta a { font-weight: 500; }
+
+  /* Experience */
+  .timeline { list-style: none; margin: 0; padding: 0 0 0 22px; border-left: 2px solid var(--line); }
+  .timeline li { position: relative; padding-bottom: 26px; }
+  .timeline li:last-child { padding-bottom: 0; }
+  .timeline li::before {
+    content: ""; position: absolute; left: -29px; top: 5px; width: 12px; height: 12px;
+    border-radius: 50%; background: var(--bg); border: 2px solid var(--accent);
+  }
+  .when { color: var(--accent); font-size: .9rem; font-weight: 500; }
+  .timeline h3 { font-size: 1.12rem; font-weight: 700; }
+  .org { color: var(--muted); margin-bottom: 4px; }
+  .timeline p { margin: 0; }
+  .subhead { font-size: 1.2rem; font-weight: 700; font-stretch: 112%; margin: 44px 0 16px; }
+  .skills { display: grid; gap: 18px 28px; margin: 0; }
+  @media (min-width: 720px) { .skills { grid-template-columns: 1fr 1fr 1fr; } }
+  .skills dt { font-weight: 700; margin-bottom: 4px; }
+  .skills dd { margin: 0; color: var(--muted); }
+
+  .contact-line { font-size: clamp(1.5rem, 4.4vw, 2.6rem); font-weight: 700; font-stretch: 115%; margin-bottom: 16px; }
+  .contact-line a { word-break: break-word; }
+  footer { border-top: 1px solid var(--line); padding: 36px 0 56px; color: var(--muted); font-size: .9rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <a class="mark" href="#">Mitul Bhattacharya</a>
+    <nav aria-label="Main">
+      <div class="links">
+        <a href="#spot">Spot the fake</a>
+        <a href="#research">Research</a>
+        <a href="#projects">Projects</a>
+        <a href="#experience">Experience</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <button class="toggle" id="themeToggle" type="button" aria-label="Switch colour theme">Dark</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Mitul<br>Bhattacharya</h1>
+
+      <div class="hero-row">
+        <p class="lead">I build models that tell real audio from synthetic audio, and connect LLMs to the tools people already use.</p>
+        <div>
+          <p class="status">MSc Computational Linguistics, University of Stuttgart. Applied NLP, speech processing and LLM systems, with 2.5 years of enterprise IT experience at Wipro.</p>
+          <div class="actions">
+            <!-- TODO: put your CV at assets/cv.pdf, or change this link -->
+            <a class="btn primary" href="assets/cv.pdf">Download CV</a>
+            <a class="btn" href="https://github.com/YOUR-USERNAME">GitHub</a>
+            <a class="btn" href="https://www.linkedin.com/in/mrityunjoy-bhattacharya-04025b124/">LinkedIn</a>
+          </div>
+        </div>
+      </div>
+
+      <figure style="margin:0">
+        <div class="scope">
+          <div class="scope-head">
+            <span class="live">Simulated speech, live</span>
+            <span>0 to 8 kHz</span>
+          </div>
+          <div class="plot">
+            <div class="axis" aria-hidden="true">
+              <span style="top:0%">8 kHz</span>
+              <span style="top:50%">4 kHz</span>
+              <span style="top:calc(100% - 38px)">0</span>
+            </div>
+            <div class="canvases">
+              <canvas id="spec" role="img" aria-label="A scrolling spectrogram of simulated speech. Real and synthetic utterances alternate, and a strip below labels each one."></canvas>
+              <canvas id="strip" aria-hidden="true"></canvas>
+            </div>
+          </div>
+          <div class="legend" aria-hidden="true">
+            <span><i style="background:var(--panel-accent)"></i>Real</span>
+            <span><i style="background:var(--panel-gold)"></i>Synthetic</span>
+          </div>
+        </div>
+        <figcaption>
+          This spectrogram is generated in your browser. Every few seconds a synthetic utterance slips in, with the cut-off highs and flat pitch that give many vocoders away. It illustrates the cues deepfake detectors learn to pick up; it is not a live model.
+        </figcaption>
+      </figure>
+    </section>
+
+    <section class="sec" id="spot">
+      <h2>Spot the fake</h2>
+      <div class="body wide">
+        <p class="game-intro">One of these clips is synthetic speech. Which one?</p>
+        <div class="pair">
+          <div class="clip" id="clipA">
+            <div class="clip-head"><span>Clip A</span><button type="button" data-pick="0">A is the fake</button></div>
+            <canvas aria-label="Spectrogram of clip A"></canvas>
+          </div>
+          <div class="clip" id="clipB">
+            <div class="clip-head"><span>Clip B</span><button type="button" data-pick="1">B is the fake</button></div>
+            <canvas aria-label="Spectrogram of clip B"></canvas>
+          </div>
+        </div>
+        <p class="verdict" id="verdict" aria-live="polite"></p>
+        <div class="game-foot">
+          <button class="again" id="again" type="button">Try another pair</button>
+          <span class="tally" id="tally"></span>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec" id="research">
+      <h2>Research</h2>
+      <div class="body">
+        <article class="paper">
+          <div class="venue">EUSIPCO 2026, accepted</div>
+          <h3>Beyond the Seen: Environmental Sound Deepfake Detection Across Unseen Generators</h3>
+          <p class="authors">K. Naduvathra Revi, M. Bhattacharya, S. A. Shaik Adam</p>
+          <p>Our entry to the ICASSP 2026 Grand Challenge (Track 1). EAT+AASIST pairs a pre-trained Efficient Audio Transformer with a graph-based AASIST backend. Differential fine-tuning and data augmentation (codec simulation, gain normalisation) help it generalise to generators it never saw in training.</p>
+          <div class="result">
+            <strong>2.48% EER</strong>
+            <span>on EnvSDD, an 81% relative improvement over the strongest baseline (13.20%).</span>
+          </div>
+          <div class="plinks">
+            <a href="#">Paper</a><!-- TODO: paper link -->
+            <a href="#">Code</a><!-- TODO: code link, or delete -->
+          </div>
+        </article>
+
+        <ol class="pubs">
+          <li>
+            <span class="pub-title">Explaining Federated SPARQL Queries with How-Provenance.</span>
+            Z. Asma, M. Bhattacharya, D. Hernández, L. Galárraga, G. Flouris, I. Fundulaki, K. Hose.
+            <em>DKGFed Workshop, ESWC 2024.</em>
+          </li>
+          <li>
+            <span class="pub-title">Comparative Analysis of AC-AC Power Converters for Primary Side Wireless Power Transfer System.</span>
+            K. Kumar, A. De, S. R. Singh, M. Bhattacharya, J. M. Kumbhare.
+            <em>i-PACT 2019.</em>
+          </li>
+          <li>
+            <span class="pub-title">Impact of Gallium Nitride Semiconductor Devices in Tri-State Boost Converter.</span>
+            K. Kumar, M. Bhattacharya, S. Garlapati, S. Banerjee.
+            <em>IEEE ICSET 2019.</em>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="sec" id="projects">
+      <h2>Projects</h2>
+      <div class="body">
+        <div class="filters" role="group" aria-label="Filter projects">
+          <button class="chip" type="button" data-filter="all" aria-pressed="true">All</button>
+          <button class="chip" type="button" data-filter="audio" aria-pressed="false">Audio and speech</button>
+          <button class="chip" type="button" data-filter="llm" aria-pressed="false">LLMs and NLP</button>
+          <button class="chip" type="button" data-filter="systems" aria-pressed="false">Web and IoT systems</button>
+        </div>
+
+        <ul class="projects">
+          <li class="project" data-tags="audio">
+            <h3>Audio deepfake detection under noisy conditions <span class="year">2025</span></h3>
+            <canvas class="wave" aria-hidden="true"></canvas>
+            <p>A fusion model that combines CQCC acoustic features with prosodic features (pitch, shimmer, HNR) to detect synthetic speech in noisy, lossy audio. The same features also apply to voice activity detection and audio quality assessment.</p>
+            <div class="meta">
+              <div class="tags"><span>PyTorch</span><span>CQCC</span><span>Prosodic features</span></div>
+              <a href="#">Code</a><!-- TODO -->
+            </div>
+          </li>
+          <li class="project" data-tags="llm">
+            <h3>Automated knowledge base and RAG pipeline <span class="year">2025</span></h3>
+            <canvas class="wave" aria-hidden="true"></canvas>
+            <p>A co-developed LangChain system that automates news research. NER and sentiment features live in PostgreSQL, Sentence-Transformer embeddings in Chroma, and Gemini 2.5 Flash writes answers that cite their sources, which keeps outputs grounded in the data.</p>
+            <div class="meta">
+              <div class="tags"><span>LangChain</span><span>Chroma</span><span>PostgreSQL</span><span>Gemini</span></div>
+              <a href="#">Code</a><!-- TODO -->
+            </div>
+          </li>
+          <li class="project" data-tags="llm">
+            <h3>Synthetic data generation with multimodal LLMs <span class="year">2025</span></h3>
+            <canvas class="wave" aria-hidden="true"></canvas>
+            <p>A two-stage Qwen 2.5-VL and Granite 3.2-Vision pipeline that generates and labels reasoning tasks from COCO images. Diversity is checked with CLIP embeddings and HDBSCAN clustering; linguistic complexity with Flesch scores.</p>
+            <div class="meta">
+              <div class="tags"><span>VLMs</span><span>CLIP</span><span>HDBSCAN</span></div>
+              <a href="#">Code</a><!-- TODO -->
+            </div>
+          </li>
+          <li class="project" data-tags="audio">
+            <h3>Generative AI for music <span class="year">2024</span></h3>
+            <canvas class="wave" aria-hidden="true"></canvas>
+            <p>A bidirectional RNN that generates original musical sequences, plus a spectrogram-based music classifier comparing STFT and Mel-spectrogram inputs.</p>
+            <div class="meta">
+              <div class="tags"><span>RNNs</span><span>Spectrograms</span></div>
+              <a href="#">Code</a><!-- TODO -->
+            </div>
+          </li>
+          <li class="project" data-tags="systems llm">
+            <h3>Knowledge graph embedding explorer</h3>
+            <canvas class="wave" aria-hidden="true"></canvas>
+            <p>A RESTful web interface that visualises federated SPARQL queries across distributed data sources, built on an asynchronous Python backend with endpoints connecting heterogeneous sources. Built at the Institute for Artificial Intelligence.</p>
+            <div class="meta">
+              <div class="tags"><span>Python</span><span>Flask</span><span>SPARQL</span></div>
+            </div>
+          </li>
+          <li class="project" data-tags="systems">
+            <h3>Real-time climate monitoring for SciWalk</h3>
+            <canvas class="wave" aria-hidden="true"></canvas>
+            <p>A Raspberry Pi Zero system that streams readings from 5+ environmental sensors in real time, plus an Android app that shows live sensor data during SciWalk field sessions. Built at the IABP.</p>
+            <div class="meta">
+              <div class="tags"><span>Python</span><span>Raspberry Pi</span><span>Android</span></div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="sec" id="experience">
+      <h2>Experience</h2>
+      <div class="body">
+        <ol class="timeline">
+          <li>
+            <div class="when">Jul 2026 to present, part-time</div>
+            <h3>Research Assistant</h3>
+            <div class="org">TIK (Technical Information and Communication Services), University of Stuttgart</div>
+            <p>Integrated local and external LLM APIs into the Znuny ticketing system through custom extension packages, adding German to English translation and ticket summarisation for university agents and administrative staff.</p>
+          </li>
+          <li>
+            <div class="when">Apr 2025 to present, part-time</div>
+            <h3>Research Assistant</h3>
+            <div class="org">Institute of Acoustics and Building Physics (IABP), University of Stuttgart</div>
+            <p>Built a Raspberry Pi Zero climate-monitoring system streaming 5+ sensors in real time with Python, moved the architecture to Arduino Giga R1 to cut measurement latency, ran a feasibility study on NVIDIA Jetson Nano for non-invasive temperature estimation, and built an Android app showing live readings during field sessions.</p>
+          </li>
+          <li>
+            <div class="when">Jan 2024 to Sep 2026, part-time</div>
+            <h3>Research Assistant</h3>
+            <div class="org">Institute for Artificial Intelligence, University of Stuttgart</div>
+            <p>Built a RESTful web interface (Python, Flask) that visualises federated SPARQL queries across distributed data sources, designed API endpoints connecting heterogeneous sources, and maintained the department website.</p>
+          </li>
+          <li>
+            <div class="when">Sep 2020 to Jan 2023</div>
+            <h3>Project Engineer</h3>
+            <div class="org">Wipro, Royal Dutch Shell account, Kolkata</div>
+            <p>Diagnosed and resolved a P2 live incident in BizTalk orchestration that had halted data transfer, writing the C# fix independently. Contributed to a Trading SAP upgrade across critical SAP Chemicals interfaces, recognised with a Certificate of Appreciation. Reviewed change requests in ServiceNow and monitored production with Splunk, using SQL for root-cause analysis.</p>
+          </li>
+          <li>
+            <div class="when">May 2019 to Apr 2020</div>
+            <h3>Machine Learning Intern</h3>
+            <div class="org">HighRadius, Bhubaneswar</div>
+            <p>Started as a summer intern, then built a B2B cloud application using time-series forecasting to predict financial trends, connected the ML pipeline to interactive web dashboards, and helped deploy it to the cloud.</p>
+          </li>
+          <li>
+            <div class="when">May 2018 to Jun 2018</div>
+            <h3>Research Intern</h3>
+            <div class="org">Indian Institute of Technology Kharagpur</div>
+            <p>Research internship on electric motors and electric vehicles.</p>
+          </li>
+        </ol>
+
+        <div class="subhead">Education</div>
+        <ol class="timeline">
+          <li>
+            <div class="when">Oct 2024 to present</div>
+            <h3>MSc Computational Linguistics</h3>
+            <div class="org">University of Stuttgart</div>
+            <p>Specialisation in applied NLP. Coursework includes Deep Learning for Speech and Text Processing, Foundation Models, Machine Translation and Machine Learning.</p>
+          </li>
+          <li>
+            <div class="when">May 2016 to May 2020</div>
+            <h3>B.Tech Electrical Engineering</h3>
+            <div class="org">KIIT University</div>
+            <p>German grade equivalent 1.9 (German scale, 1.0 is best).</p>
+          </li>
+        </ol>
+
+        <div class="subhead">Skills</div>
+        <dl class="skills">
+          <div><dt>Speech and audio</dt><dd>BEATs, AASIST, CQCC, prosodic feature extraction, speech-to-text and text-to-speech pipelines</dd></div>
+          <div><dt>LLMs and NLP</dt><dd>LangChain, RAG, LLM API integration (Claude, Gemini; cloud and local), Chroma, BERT, Sentence Transformers, LLM fine-tuning, Claude Code</dd></div>
+          <div><dt>Machine learning</dt><dd>PyTorch, TensorFlow, Hugging Face Transformers, scikit-learn, Pandas, NumPy, OpenCV</dd></div>
+          <div><dt>Programming</dt><dd>Python, SQL (PostgreSQL), Java, C++</dd></div>
+          <div><dt>Engineering</dt><dd>REST APIs, WebSockets, HTML, CSS, JavaScript, Docker, Git, Splunk, ServiceNow</dd></div>
+          <div><dt>Languages</dt><dd>English (C1), German (A2, improving), Hindi and Bengali (native)</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="sec" id="contact">
+      <h2>Contact</h2>
+      <div class="body">
+        <p class="contact-line"><a href="mailto:mitulb188@gmail.com">mitulb188@gmail.com</a></p>
+        <p>Happy to talk about speech and audio forensics, applied LLMs, or a role on your team. Based in Stuttgart, Germany.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    The spectrograms on this page are synthesised in your browser from harmonics, formants and noise. No audio is recorded or uploaded.
+  </footer>
+</div>
+
+<script>
+/* ---------- Theme toggle ---------- */
+(function () {
+  const root = document.documentElement, btn = document.getElementById('themeToggle');
+  let saved = null;
+  try { saved = localStorage.getItem('theme'); } catch (e) {}
+  if (saved === 'light' || saved === 'dark') root.dataset.theme = saved;
+  const isDark = () => root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+  const label = () => { btn.textContent = isDark() ? 'Light' : 'Dark'; };
+  label();
+  btn.addEventListener('click', () => {
+    root.dataset.theme = isDark() ? 'light' : 'dark';
+    try { localStorage.setItem('theme', root.dataset.theme); } catch (e) {}
+    label();
+    window.dispatchEvent(new Event('themechange'));
+  });
+})();
+
+/* ---------- Project filter ---------- */
+(function () {
+  const chips = document.querySelectorAll('.chip'), items = document.querySelectorAll('.project');
+  chips.forEach(chip => chip.addEventListener('click', () => {
+    const f = chip.dataset.filter;
+    chips.forEach(c => c.setAttribute('aria-pressed', String(c === chip)));
+    items.forEach(it => { it.hidden = f !== 'all' && !it.dataset.tags.split(' ').includes(f); });
+    window.dispatchEvent(new Event('resize'));
+  }));
+})();
+
+/* ---------- Speech synthesiser (spectrogram columns) ---------- */
+const Synth = (function () {
+  const FMAX = 8000, N = 160, CUT = 0.64 * FMAX, ALIAS = 6600;
+  const VOWELS = [[730,1090,2440],[270,2290,3010],[660,1720,2410],[300,870,2240],[530,1840,2480],[570,840,2410],[440,1020,2240]];
+  const g = (f, F, bw) => Math.exp(-((f - F) * (f - F)) / (2 * bw * bw));
+  const smooth = (x, a, b) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
+
+  function rng(seed) { // mulberry32
+    let a = seed >>> 0;
+    return () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+  }
+  function voice(rand, spoof) {
+    return { rand, spoof, t: 0, phone: 'sil', left: 0, len: 1, prev: 'sil',
+      F: VOWELS[0].slice(), Ft: VOWELS[0].slice(), base: 105 + rand() * 95 };
+  }
+  function nextPhone(v) {
+    const r = v.rand();
+    if (v.prev === 'voiced' && r < 0.3) { v.phone = 'unvoiced'; v.len = 4 + (v.rand() * 8 | 0); }
+    else if (r < 0.08) { v.phone = 'sil'; v.len = 3 + (v.rand() * 5 | 0); }
+    else { v.phone = 'voiced'; v.len = 9 + (v.rand() * 16 | 0); v.Ft = VOWELS[v.rand() * VOWELS.length | 0].slice(); }
+    v.left = v.len; v.prev = v.phone;
+  }
+  // Fill out[0..N) with intensities in 0..1 (index 0 = lowest frequency)
+  function column(v, out, silent) {
+    if (!silent) { if (v.left <= 0) nextPhone(v); }
+    const phone = silent ? 'sil' : v.phone;
+    const p = 1 - v.left / v.len;
+    if (!silent) v.left--;
+    v.t++;
+    const env = Math.pow(Math.sin(Math.PI * Math.min(1, Math.max(0, p))), 0.6);
+    for (let i = 0; i < 3; i++) v.F[i] += (v.Ft[i] - v.F[i]) * 0.18;
+    const f0 = v.spoof ? v.base + 4 * Math.sin(v.t * 0.04)
+                       : v.base + 22 * Math.sin(v.t * 0.06) + 9 * Math.sin(v.t * 0.21) + (v.rand() - 0.5) * 4;
+    const hw = v.spoof ? 0.05 : 0.09;
+    const fake = v.spoof && !silent;
+    for (let k = 0; k < N; k++) {
+      const f = (k + 0.5) / N * FMAX;
+      let e = 0.05 + v.rand() * 0.07;
+      if (phone === 'voiced') {
+        const h = f / f0, d = h - Math.round(h);
+        const harm = Math.exp(-(d * d) / (2 * hw * hw));
+        const fm = 0.9 * g(f, v.F[0], 90) + 0.75 * g(f, v.F[1], 130) + 0.45 * g(f, v.F[2], 190) + 0.16;
+        const tilt = Math.exp(-f / 3800);
+        e += env * (harm * (0.25 + 0.85 * fm) * (0.45 + 0.55 * tilt) + v.rand() * 0.12 * fm + v.rand() * 0.05);
+      } else if (phone === 'unvoiced') {
+        e += env * smooth(f, 2800, 5000) * (0.3 + v.rand() * 0.45);
+      }
+      if (fake) {
+        if (f > CUT) e = 0.025 + (e - 0.025) * 0.1;
+        if (Math.abs(f - ALIAS) < 32) e += 0.3;
+        if (v.t % 11 === 0 && phone !== 'sil') e += 0.07;
+      }
+      out[k] = e > 1 ? 1 : e;
+    }
+  }
+
+  // Colour map: deep navy to teal to pale yellow
+  const STOPS = [[0, 11, 20, 38], [0.28, 30, 46, 110], [0.52, 38, 122, 140], [0.76, 108, 199, 154], [1, 242, 227, 107]];
+  const LUT = new Uint8ClampedArray(256 * 3);
+  for (let i = 0; i < 256; i++) {
+    const x = Math.pow(i / 255, 0.85);
+    let j = 0; while (j < STOPS.length - 2 && x > STOPS[j + 1][0]) j++;
+    const a = STOPS[j], b = STOPS[j + 1], t = (x - a[0]) / (b[0] - a[0]);
+    for (let c = 0; c < 3; c++) LUT[i * 3 + c] = a[c + 1] + (b[c + 1] - a[c + 1]) * t;
+  }
+  return { N, FMAX, CUT, ALIAS, rng, voice, column, LUT };
+})();
+
+const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const PANEL = { accent: '#5CC3B0', gold: '#F0CF5A', ink: '#DCE4F2', muted: '#8794AE', bg: '#0B1426', line: '#33456A' };
+const FONT = '"Archivo", system-ui, sans-serif';
+
+/* ---------- Hero: live scrolling spectrogram ---------- */
+(function () {
+  const spec = document.getElementById('spec'), strip = document.getElementById('strip');
+  const sctx = spec.getContext('2d'), tctx = strip.getContext('2d');
+  const out = new Float32Array(Synth.N);
+  let W = 0, H = 0, SH = 0, dpr = 1, step = 2, img = null;
+  let v = null, utterLeft = 0, gapLeft = 30, utterLen = 0, spoofRun = 0, lastSpoof = false;
+  let running = false, visible = true, raf = null;
+
+  function newUtterance() {
+    let spoof = Math.random() < 0.45;
+    if (spoof === lastSpoof && spoofRun >= 2) spoof = !spoof;
+    spoofRun = spoof === lastSpoof ? spoofRun + 1 : 1; lastSpoof = spoof;
+    v = Synth.voice(Math.random, spoof);
+    utterLen = utterLeft = 170 + (Math.random() * 110 | 0);
+  }
+  if (!v) v = Synth.voice(Math.random, false);
+
+  function setup() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const r = spec.getBoundingClientRect(), rs = strip.getBoundingClientRect();
+    W = Math.max(1, Math.round(r.width * dpr)); H = Math.max(1, Math.round(r.height * dpr));
+    SH = Math.max(1, Math.round(rs.height * dpr));
+    spec.width = W; spec.height = H; strip.width = W; strip.height = SH;
+    step = Math.max(1, Math.round(2 * dpr));
+    img = sctx.createImageData(step, H);
+    sctx.fillStyle = PANEL.bg; sctx.fillRect(0, 0, W, H);
+    tctx.fillStyle = PANEL.bg; tctx.fillRect(0, 0, W, SH);
+    for (let i = 0; i < Math.ceil(W / step); i++) advance();
+  }
+
+  function advance() {
+    // Synthesise one column
+    let inUtter = false;
+    if (gapLeft > 0) { gapLeft--; Synth.column(v, out, true); if (gapLeft === 0) newUtterance(); }
+    else { Synth.column(v, out, false); utterLeft--; inUtter = true; }
+
+    // Spectrogram: shift left, paint new column at the right edge
+    sctx.drawImage(spec, -step, 0);
+    const d = img.data, LUT = Synth.LUT, N = Synth.N;
+    for (let y = 0; y < H; y++) {
+      let k = Math.floor((1 - (y + 0.5) / H) * N); if (k < 0) k = 0; if (k >= N) k = N - 1;
+      const li = (out[k] * 255 | 0) * 3;
+      for (let x = 0; x < step; x++) { const o = (y * step + x) * 4; d[o] = LUT[li]; d[o + 1] = LUT[li + 1]; d[o + 2] = LUT[li + 2]; d[o + 3] = 255; }
+    }
+    sctx.putImageData(img, W - step, 0);
+
+    // Strip: shift left, draw a faint "listening" tick, label each utterance once it ends
+    tctx.drawImage(strip, -step, 0);
+    tctx.fillStyle = PANEL.bg; tctx.fillRect(W - step, 0, step, SH);
+    if (inUtter) {
+      tctx.fillStyle = PANEL.line; tctx.fillRect(W - step, SH / 2 - dpr, step, 2 * dpr);
+      if (utterLeft === 0) {
+        const span = utterLen * step, x0 = W - span;
+        const col = v.spoof ? PANEL.gold : PANEL.accent;
+        tctx.fillStyle = PANEL.bg; tctx.fillRect(x0, 0, span, SH);
+        tctx.fillStyle = col; tctx.globalAlpha = 0.9;
+        tctx.fillRect(x0, SH - 6 * dpr, span, 4 * dpr);
+        tctx.globalAlpha = 1;
+        tctx.font = `600 ${12 * dpr}px ${FONT}`; tctx.textBaseline = 'top';
+        tctx.fillText(v.spoof ? 'Synthetic' : 'Real', Math.max(2 * dpr, x0 + 4 * dpr), 2 * dpr);
+        gapLeft = 26 + (Math.random() * 20 | 0);
+      }
+    }
+  }
+
+  function frame() {
+    raf = null;
+    if (!visible || document.hidden) return;
+    advance();
+    raf = requestAnimationFrame(frame);
+  }
+  function start() { if (!reducedMotion && !raf) raf = requestAnimationFrame(frame); }
+
+  setup();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { /* labels drawn later pick up the font */ });
+  start();
+  let rt = null;
+  window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { if (Math.round(spec.getBoundingClientRect().width * Math.min(devicePixelRatio || 1, 2)) !== W) setup(); }, 150); });
+  if ('IntersectionObserver' in window) new IntersectionObserver(([e]) => { visible = e.isIntersecting; if (visible) start(); }).observe(spec);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) start(); });
+})();
+
+/* ---------- Spot the fake ---------- */
+(function () {
+  const clips = [document.getElementById('clipA'), document.getElementById('clipB')];
+  const canvases = clips.map(c => c.querySelector('canvas'));
+  const buttons = clips.map(c => c.querySelector('button'));
+  const verdict = document.getElementById('verdict'), tally = document.getElementById('tally');
+  const COLS = 190;
+  let fakeIdx = 0, seeds = [1, 2], answered = false, right = 0, tries = 0;
+
+  function render(cv, spoof, seed, annotate) {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const r = cv.getBoundingClientRect();
+    const W = Math.max(1, Math.round(r.width * dpr)), H = Math.max(1, Math.round(r.height * dpr));
+    cv.width = W; cv.height = H;
+    const ctx = cv.getContext('2d');
+    const rand = Synth.rng(seed), v = Synth.voice(rand, spoof);
+    const N = Synth.N, mat = [], col = new Float32Array(N);
+    for (let c = 0; c < COLS; c++) { Synth.column(v, col, c < 8 || c >= COLS - 8); mat.push(Float32Array.from(col)); }
+    const img = ctx.createImageData(W, H), d = img.data, LUT = Synth.LUT;
+    for (let x = 0; x < W; x++) {
+      const m = mat[Math.min(COLS - 1, Math.floor(x / W * COLS))];
+      for (let y = 0; y < H; y++) {
+        let k = Math.floor((1 - (y + 0.5) / H) * N); if (k < 0) k = 0; if (k >= N) k = N - 1;
+        const li = (m[k] * 255 | 0) * 3, o = (y * W + x) * 4;
+        d[o] = LUT[li]; d[o + 1] = LUT[li + 1]; d[o + 2] = LUT[li + 2]; d[o + 3] = 255;
+      }
+    }
+    ctx.putImageData(img, 0, 0);
+    if (!annotate) return;
+
+    // Annotations, drawn in CSS pixels
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const w = W / dpr, h = H / dpr;
+    ctx.font = `600 12px ${FONT}`; ctx.textBaseline = 'top';
+    const tag = (text, x, y, align, base, color) => {
+      ctx.textAlign = align; ctx.textBaseline = base;
+      const tw = ctx.measureText(text).width, bx = align === 'right' ? x - tw : x;
+      const by = base === 'bottom' ? y - 14 : y;
+      ctx.fillStyle = 'rgba(11,20,38,0.82)'; ctx.fillRect(bx - 5, by - 2, tw + 10, 18);
+      ctx.fillStyle = color; ctx.fillText(text, x, y);
+    };
+    if (spoof) {
+      const cutY = (1 - Synth.CUT / Synth.FMAX) * h, aliasY = (1 - Synth.ALIAS / Synth.FMAX) * h;
+      ctx.strokeStyle = PANEL.gold; ctx.lineWidth = 1.5; ctx.setLineDash([5, 4]);
+      ctx.strokeRect(4, 3, w - 8, cutY - 4);
+      ctx.setLineDash([]);
+      tag('Empty high band', 12, 10, 'left', 'top', PANEL.gold);
+      tag('Alias tone', w - 12, aliasY - 4, 'right', 'bottom', PANEL.gold);
+      tag('Flat pitch', 12, h - 8, 'left', 'bottom', PANEL.gold);
+    } else {
+      tag('Breath noise reaches the top', 12, 10, 'left', 'top', PANEL.accent);
+      tag('Pitch rises and falls', 12, h - 8, 'left', 'bottom', PANEL.accent);
+    }
+    ctx.textAlign = 'left';
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+  }
+
+  function draw() { canvases.forEach((cv, i) => render(cv, i === fakeIdx, seeds[i], answered)); }
+  function newPair() {
+    fakeIdx = Math.random() < 0.5 ? 0 : 1;
+    seeds = [Math.random() * 1e9 | 0, Math.random() * 1e9 | 0];
+    answered = false;
+    clips.forEach(c => c.classList.remove('correct'));
+    buttons.forEach(b => { b.disabled = false; });
+    verdict.textContent = '';
+    draw();
+  }
+  buttons.forEach(b => b.addEventListener('click', () => {
+    if (answered) return;
+    answered = true; tries++;
+    const pick = +b.dataset.pick, ok = pick === fakeIdx;
+    if (ok) right++;
+    const name = fakeIdx === 0 ? 'A' : 'B';
+    verdict.innerHTML = (ok ? '<strong>Right.</strong> ' : '<strong>Not this time.</strong> ') +
+      `Clip ${name} is synthetic: its energy stops sharply around 5 kHz, a thin tone sits in the empty band, and the pitch barely moves. Real speech keeps breath noise and harmonics all the way up.`;
+    tally.textContent = `${right} of ${tries} spotted`;
+    clips[fakeIdx].classList.add('correct');
+    buttons.forEach(x => { x.disabled = true; });
+    draw();
+  }));
+  document.getElementById('again').addEventListener('click', newPair);
+  let rt = null;
+  window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(draw, 150); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { if (answered) draw(); });
+  newPair();
+})();
+
+/* ---------- Project waveforms (hover to scrub) ---------- */
+(function () {
+  const waves = [...document.querySelectorAll('.wave')];
+  const hash = s => { let h = 2166136261; for (const ch of s) h = Math.imul(h ^ ch.charCodeAt(0), 16777619); return h >>> 0; };
+  function colors() {
+    const cs = getComputedStyle(document.documentElement);
+    return { muted: cs.getPropertyValue('--line').trim(), accent: cs.getPropertyValue('--accent').trim() };
+  }
+  const state = waves.map(cv => {
+    const title = cv.closest('.project').querySelector('h3').firstChild.textContent;
+    return { cv, seed: hash(title), amps: null, head: -1 };
+  });
+  function build(s) {
+    const r = s.cv.getBoundingClientRect();
+    if (!r.width) return false;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    s.dpr = dpr; s.w = r.width; s.h = r.height;
+    s.cv.width = Math.round(r.width * dpr); s.cv.height = Math.round(r.height * dpr);
+    const n = Math.max(20, Math.floor(r.width / 4)), rand = Synth.rng(s.seed);
+    s.amps = []; let word = 0, wordLeft = 0;
+    for (let i = 0; i < n; i++) {
+      if (wordLeft <= 0) { word = rand() < 0.18 ? 0 : 0.35 + rand() * 0.65; wordLeft = 4 + (rand() * 14 | 0); }
+      wordLeft--;
+      s.amps.push(Math.max(0.06, word * (0.4 + 0.6 * rand())));
+    }
+    return true;
+  }
+  function draw(s, c) {
+    if (!s.amps && !build(s)) return;
+    const ctx = s.cv.getContext('2d');
+    ctx.setTransform(s.dpr, 0, 0, s.dpr, 0, 0);
+    ctx.clearRect(0, 0, s.w, s.h);
+    const n = s.amps.length, bw = s.w / n, mid = s.h / 2;
+    for (let i = 0; i < n; i++) {
+      const x = i * bw, a = s.amps[i] * (s.h / 2 - 2);
+      ctx.fillStyle = s.head >= 0 && x < s.head ? c.accent : c.muted;
+      ctx.fillRect(x + 0.5, mid - a, Math.max(1, bw - 1.5), a * 2);
+    }
+    if (s.head >= 0) { ctx.fillStyle = c.accent; ctx.fillRect(s.head - 1, 0, 2, s.h); }
+  }
+  function drawAll() { const c = colors(); state.forEach(s => { s.amps = null; draw(s, c); }); }
+  state.forEach(s => {
+    s.cv.addEventListener('pointermove', e => { s.head = e.clientX - s.cv.getBoundingClientRect().left; draw(s, colors()); });
+    s.cv.addEventListener('pointerleave', () => { s.head = -1; draw(s, colors()); });
+  });
+  let rt = null;
+  window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(drawAll, 150); });
+  window.addEventListener('themechange', drawAll);
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', drawAll);
+  drawAll();
+})();
+</script>
+</body>
+</html>
