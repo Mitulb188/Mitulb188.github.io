@@ -7,313 +7,358 @@
 <meta name="description" content="Mrityunjoy Bhattacharya: ML researcher working on phylogenetic audio deepfake classification, LLM integration and agentic systems.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #F3F5F9;
-    --surface: #E7EBF2;
-    --ink: #121A2B;
-    --muted: #59657E;
-    --line: #D2D9E5;
-    --accent: #1E7A8A;
-    --panel: #0B1426;
-    --panel-2: #111D35;
-    --panel-3: #18263F;
-    --panel-line: #24365A;
-    --panel-ink: #DCE4F2;
-    --panel-muted: #8794AE;
-    --t-research: #5CC3B0;
-    --t-industry: #F0CF5A;
-    --t-projects: #8EA2F0;
-    --t-education: #E39A7B;
-    --t-pubs: #E8EDF7;
-    --hw: 150px;
+    --bg: #EDF2F2;
+    --tile: #FFFFFF;
+    --tile-2: #F2F6F6;
+    --ink: #12202A;
+    --muted: #586A72;
+    --line: #D6DFE1;
+    --accent: #1A7A7A;
+    --accent-soft: #DCEFEC;
+    --warm: #B85D17;
+    --warm-soft: #FBE9DA;
+    --panel: #0E1E22;
+    --panel-2: #152A2F;
+    --panel-line: #24403F;
+    --panel-ink: #DDEBEA;
+    --panel-muted: #8DA8A8;
+    --panel-accent: #5CC3B0;
+    --c-research: #1A7A7A;
+    --c-industry: #B85D17;
+    --c-edu: #5160B8;
     --font: "Archivo", system-ui, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, monospace;
+    --r: 18px;
     color-scheme: light;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --bg: #0E1729; --surface: #16223B; --ink: #E5EBF5; --muted: #919EB8;
-      --line: #24324F; --accent: #5CC3B0; color-scheme: dark;
+      --bg: #0A1416; --tile: #11201F; --tile-2: #172A2A; --ink: #E2EEED; --muted: #93AAAA; --line: #22393A;
+      --accent: #5CC3B0; --accent-soft: #173A36; --warm: #F0A24A; --warm-soft: #3A2A16;
+      --c-research: #5CC3B0; --c-industry: #F0A24A; --c-edu: #93A4F0; color-scheme: dark;
     }
   }
   :root[data-theme="dark"] {
-    --bg: #0E1729; --surface: #16223B; --ink: #E5EBF5; --muted: #919EB8;
-    --line: #24324F; --accent: #5CC3B0; color-scheme: dark;
+    --bg: #0A1416; --tile: #11201F; --tile-2: #172A2A; --ink: #E2EEED; --muted: #93AAAA; --line: #22393A;
+    --accent: #5CC3B0; --accent-soft: #173A36; --warm: #F0A24A; --warm-soft: #3A2A16;
+    --c-research: #5CC3B0; --c-industry: #F0A24A; --c-edu: #93A4F0; color-scheme: dark;
   }
-  @media (max-width: 640px) { :root { --hw: 104px; } }
-  @media (max-width: 520px) { .intro h1 { font-size: 2.15rem; font-stretch: 112%; } }
 
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
-  body { margin: 0; background: var(--bg); color: var(--ink); font: 400 1.0625rem/1.6 var(--font); -webkit-font-smoothing: antialiased; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 400 1rem/1.55 var(--font); -webkit-font-smoothing: antialiased; }
   a { color: var(--accent); text-underline-offset: 3px; text-decoration-thickness: 1px; }
   a:hover { text-decoration-thickness: 2px; }
-  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 3px; }
-  h1, h2, h3 { margin: 0; line-height: 1.08; }
-  p { margin: 0 0 1em; }
-  button { font: inherit; }
-  .wrap { max-width: 1240px; margin: 0 auto; padding: 0 16px; }
-  @media (min-width: 720px) { .wrap { padding: 0 32px; } }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+  h1, h2, h3 { margin: 0; line-height: 1.12; }
+  p { margin: 0 0 .8em; }
+  button, input { font: inherit; }
+  .mono { font-family: var(--mono); }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 0 14px 40px; }
+  @media (min-width: 720px) { .wrap { padding: 0 28px 56px; } }
 
   /* Header */
-  .top { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 0; }
+  .top { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 2px; }
   .mark { font-weight: 700; font-stretch: 112%; color: var(--ink); text-decoration: none; }
-  .top nav { display: flex; align-items: center; gap: 22px; font-size: .95rem; }
-  .top nav .links { display: none; gap: 22px; }
-  @media (min-width: 760px) { .top nav .links { display: flex; } }
+  .top nav { display: flex; align-items: center; gap: 20px; font-size: .95rem; }
+  .top nav .links { display: none; gap: 20px; }
+  @media (min-width: 820px) { .top nav .links { display: flex; } }
   .top nav a { color: var(--muted); text-decoration: none; }
   .top nav a:hover { color: var(--ink); }
-  .toggle { color: var(--ink); background: none; cursor: pointer; border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; }
+  .toggle { color: var(--ink); background: var(--tile); cursor: pointer; border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; }
 
-  /* Intro */
-  .intro { display: grid; gap: 20px 48px; padding: 24px 0 36px; align-items: end; }
-  @media (min-width: 900px) { .intro { grid-template-columns: 1.25fr 1fr; padding: 40px 0 44px; } }
-  .intro h1 { font-size: clamp(2.2rem, 6vw, 4.6rem); font-weight: 800; font-stretch: 125%; letter-spacing: -0.03em; line-height: .95; }
-  .lead { font-size: clamp(1.2rem, 2.2vw, 1.5rem); line-height: 1.35; font-weight: 500; margin: 18px 0 0; max-width: 38ch; }
-  .status { color: var(--muted); margin: 0 0 18px; max-width: 46ch; }
+  /* Grid */
+  .grid { display: grid; gap: 14px; grid-template-columns: 1fr; }
+  @media (min-width: 760px) { .grid { grid-template-columns: repeat(6, 1fr); } .grid > * { grid-column: span 6; } .t-pubs, .t-limits { grid-column: span 3; } }
+  @media (min-width: 1100px) {
+    .grid { grid-template-columns: repeat(12, 1fr); }
+    .t-hero { grid-column: 1 / span 8; } .t-meta { grid-column: 9 / span 4; }
+    .t-ask { grid-column: 1 / span 7; } .t-eval { grid-column: 8 / span 5; }
+    .t-skills, .t-history, .t-tasks, .t-contact { grid-column: 1 / -1; }
+    .t-pubs { grid-column: 1 / span 7; } .t-limits { grid-column: 8 / span 5; }
+  }
+  .tile { background: var(--tile); border: 1px solid var(--line); border-radius: var(--r); padding: 22px; min-width: 0; }
+  @media (min-width: 720px) { .tile { padding: 26px; } }
+  .th { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 14px; margin-bottom: 16px; }
+  .th h2 { font-size: 1.3rem; font-weight: 700; font-stretch: 112%; }
+  .th .hint { font-size: .85rem; color: var(--muted); }
+  .dark { background: var(--panel); border-color: var(--panel-line); color: var(--panel-ink); }
+  .dark .th .hint { color: var(--panel-muted); }
+
+  /* Hero */
+  .t-hero { display: flex; flex-direction: column; gap: 24px; justify-content: space-between; }
+  .crumb { font-family: var(--mono); font-size: .85rem; color: var(--muted); }
+  .crumb b { color: var(--accent); font-weight: 600; }
+  .t-hero h1 { font-size: clamp(2.3rem, 5.4vw, 4.6rem); font-weight: 800; font-stretch: 125%; letter-spacing: -0.03em; line-height: .93; margin-top: 10px; }
+  @media (max-width: 520px) { .t-hero h1 { font-size: 2.15rem; font-stretch: 112%; } }
+  .lead { font-size: clamp(1.15rem, 2vw, 1.42rem); line-height: 1.38; font-weight: 500; margin: 18px 0 0; max-width: 40ch; }
+  .status { color: var(--muted); max-width: 60ch; margin-bottom: 16px; }
   .actions { display: flex; flex-wrap: wrap; gap: 10px; }
-  .btn { display: inline-block; padding: 10px 18px; border-radius: 999px; text-decoration: none; border: 1px solid var(--line); color: var(--ink); font-weight: 500; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: 999px; text-decoration: none; border: 1px solid var(--line); color: var(--ink); font-weight: 500; background: var(--tile); }
   .btn:hover { border-color: var(--accent); }
-  .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--tile); }
+  .btn small { font-family: var(--mono); font-size: .75rem; opacity: .8; }
 
-  /* Working on now */
-  .focus { padding: 0 0 36px; }
-  .focus h2 { font-size: 1rem; font-weight: 700; font-stretch: 108%; color: var(--muted); margin-bottom: 12px; }
-  .focus ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
-  @media (min-width: 860px) { .focus ul { grid-template-columns: repeat(3, 1fr); } }
-  .focus li { border-top: 2px solid var(--accent); padding-top: 12px; }
-  .focus b { display: block; font-weight: 700; margin-bottom: 4px; }
-  .focus span { color: var(--muted); font-size: .95rem; }
+  /* Model details */
+  .meta { margin: 0; display: grid; gap: 12px; }
+  .meta div { display: grid; gap: 2px; }
+  .meta dt { font-family: var(--mono); font-size: .8rem; color: var(--muted); }
+  .meta dd { margin: 0; }
+  .meta .lic { display: inline-block; background: var(--accent-soft); color: var(--accent); font-weight: 700; border-radius: 6px; padding: 1px 8px; }
 
-  /* ---------- Session window ---------- */
-  .session { background: var(--panel); color: var(--panel-ink); border-radius: 18px; overflow: hidden; box-shadow: 0 1px 0 var(--panel-line) inset; }
-  .bar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; padding: 12px 16px; background: var(--panel-2); border-bottom: 1px solid var(--panel-line); }
-  .bar .file { font-weight: 600; font-stretch: 110%; margin-right: auto; }
-  .transport { display: flex; align-items: center; gap: 6px; }
-  .tbtn {
-    width: 38px; height: 32px; display: grid; place-items: center; cursor: pointer;
-    color: var(--panel-ink); background: var(--panel-3); border: 1px solid var(--panel-line); border-radius: 8px;
-  }
-  .tbtn:hover { border-color: var(--t-research); }
-  .tbtn.play { width: 46px; background: var(--t-research); border-color: var(--t-research); color: var(--panel); }
-  .tbtn svg { width: 14px; height: 14px; fill: currentColor; }
-  .readout { font-variant-numeric: tabular-nums; background: var(--panel); border: 1px solid var(--panel-line); border-radius: 8px; padding: 4px 12px; min-width: 104px; text-align: center; }
-  .hint { color: var(--panel-muted); font-size: .85rem; }
+  /* Ask the model */
+  .t-ask { display: flex; flex-direction: column; }
+  .prompts { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+  .prompt { cursor: pointer; color: var(--panel-ink); background: var(--panel-2); border: 1px solid var(--panel-line); border-radius: 999px; padding: 6px 13px; font-size: .9rem; text-align: left; }
+  .prompt:hover, .prompt[aria-pressed="true"] { border-color: var(--panel-accent); color: #FFFFFF; }
+  .askform { display: flex; gap: 8px; margin-bottom: 14px; }
+  .askform input { flex: 1; min-width: 0; color: var(--panel-ink); background: var(--panel-2); border: 1px solid var(--panel-line); border-radius: 12px; padding: 10px 14px; }
+  .askform input::placeholder { color: var(--panel-muted); }
+  .askform button { cursor: pointer; color: var(--panel); background: var(--panel-accent); border: 0; border-radius: 12px; padding: 10px 16px; font-weight: 700; }
+  .out { flex: 1; min-height: 190px; background: var(--panel-2); border: 1px solid var(--panel-line); border-radius: 14px; padding: 16px 18px; }
+  .out .q { font-family: var(--mono); font-size: .82rem; color: var(--panel-muted); margin-bottom: 8px; }
+  .out .a { font-size: 1.02rem; line-height: 1.55; white-space: pre-wrap; }
+  .out .a.typing::after { content: ""; display: inline-block; width: 8px; height: 1.05em; margin-left: 2px; vertical-align: -2px; background: var(--panel-accent); animation: blink 1s steps(2) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  .ev { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 12px; font-size: .85rem; color: var(--panel-muted); }
+  .ev button { cursor: pointer; font-size: .85rem; color: var(--panel-accent); background: none; border: 1px solid var(--panel-line); border-radius: 6px; padding: 2px 8px; }
+  .ev button:hover { border-color: var(--panel-accent); }
+  .disclaimer { font-size: .8rem; color: var(--panel-muted); margin: 10px 0 0; }
 
-  .editor { display: grid; }
-  .scroller { overflow-x: auto; overscroll-behavior-x: contain; }
-  .rows { position: relative; min-width: 980px; padding-bottom: 6px; }
-  .row { display: grid; grid-template-columns: var(--hw) 1fr; border-bottom: 1px solid var(--panel-line); }
-  .head {
-    position: sticky; left: 0; z-index: 3; background: var(--panel-2); border-right: 1px solid var(--panel-line);
-    padding: 8px 10px; display: flex; flex-direction: column; justify-content: center; gap: 6px; font-size: .9rem;
-  }
-  .head .name { display: flex; align-items: center; gap: 8px; font-weight: 600; }
-  .head .name i { width: 9px; height: 9px; border-radius: 2px; flex: none; }
-  .ms { display: flex; gap: 4px; }
-  .ms button {
-    width: 24px; height: 20px; padding: 0; font-size: .72rem; font-weight: 700; cursor: pointer;
-    color: var(--panel-muted); background: var(--panel); border: 1px solid var(--panel-line); border-radius: 4px;
-  }
-  .ms button[aria-pressed="true"].m { background: #6B3A3A; color: #FFD9D9; border-color: #8A4C4C; }
-  .ms button[aria-pressed="true"].s { background: var(--t-industry); color: var(--panel); border-color: var(--t-industry); }
-  .lane { position: relative; }
-  .row.dim .lane { opacity: .22; }
+  /* Evaluation */
+  .big { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; }
+  .big strong { font-size: clamp(2.6rem, 5vw, 3.6rem); font-weight: 800; font-stretch: 122%; color: var(--accent); line-height: 1; }
+  .big span { color: var(--muted); }
+  .paper-t { font-weight: 600; margin: 10px 0 14px; }
+  .bars { display: grid; gap: 10px; margin-bottom: 14px; }
+  .bar { display: grid; grid-template-columns: 1fr auto; gap: 4px 10px; font-size: .9rem; }
+  .bar .track { grid-column: 1 / -1; height: 12px; background: var(--tile-2); border-radius: 6px; overflow: hidden; }
+  .bar .fill { height: 100%; width: 0; border-radius: 6px; transition: width 1.1s cubic-bezier(.2,.7,.2,1); }
+  @media (prefers-reduced-motion: reduce) { .bar .fill { transition: none; } }
+  .bar.base .fill { background: var(--muted); opacity: .45; }
+  .bar.ours .fill { background: var(--accent); }
+  .bar b { font-variant-numeric: tabular-nums; }
+  .elinks { display: flex; gap: 16px; font-weight: 600; margin-bottom: 18px; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; border-top: 1px solid var(--line); padding-top: 16px; }
+  .stats b { display: block; font-size: 1.5rem; font-weight: 800; font-stretch: 115%; line-height: 1.1; }
+  .stats span { font-size: .85rem; color: var(--muted); }
 
-  /* Ruler */
-  .ruler .lane { height: 30px; cursor: pointer; background: var(--panel-2); }
-  .ruler .head { padding: 0 10px; color: var(--panel-muted); font-size: .8rem; }
-  .tick { position: absolute; top: 0; bottom: 0; border-left: 1px solid var(--panel-line); padding-left: 5px; font-size: .78rem; color: var(--panel-muted); line-height: 30px; }
+  /* Skills */
+  .skillgroups { display: grid; gap: 20px 28px; }
+  @media (min-width: 640px) { .skillgroups { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 1100px) { .skillgroups { grid-template-columns: repeat(3, 1fr); } }
+  .sg h3 { font-size: 1rem; font-weight: 700; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+  .sg h3 i { width: 10px; height: 10px; border-radius: 3px; background: var(--accent); }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .skill { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line); background: var(--tile-2); color: var(--ink); border-radius: 8px; padding: 4px 10px; font-size: .93rem; }
+  button.skill { cursor: pointer; }
+  button.skill:hover { border-color: var(--accent); }
+  button.skill[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--tile); }
+  .skill .n { font-family: var(--mono); font-size: .72rem; min-width: 18px; text-align: center; border-radius: 5px; padding: 0 4px; background: var(--accent-soft); color: var(--accent); }
+  button.skill[aria-pressed="true"] .n { background: var(--tile); }
+  .skillstatus { margin: 18px 0 0; padding: 12px 14px; border-radius: 12px; background: var(--tile-2); color: var(--muted); font-size: .95rem; min-height: 48px; }
+  .skillstatus b { color: var(--ink); }
+  .skillstatus button { cursor: pointer; background: none; border: 0; padding: 0; color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
 
-  /* Clips */
-  .grid-lines { position: absolute; inset: 0; pointer-events: none;
-    background-image: linear-gradient(to right, var(--panel-line) 1px, transparent 1px);
-    background-size: calc(100% / 11) 100%; opacity: .45; }
-  .clip {
-    position: absolute; height: 26px; padding: 0 8px; border: 0; cursor: pointer; text-align: left;
-    color: var(--panel-ink); font-size: .8rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-    background: color-mix(in srgb, var(--c) 20%, var(--panel)); border-left: 3px solid var(--c); border-radius: 5px;
-  }
-  .clip canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; opacity: .55; }
-  .clip span { position: relative; }
-  .clip:hover { background: color-mix(in srgb, var(--c) 32%, var(--panel)); }
-  .clip.on { box-shadow: inset 0 0 0 1px var(--c); }
-  .clip[aria-pressed="true"] { background: color-mix(in srgb, var(--c) 42%, var(--panel)); box-shadow: 0 0 0 2px var(--c); z-index: 2; }
-  .clip.tiny span { display: none; }
-  .marker {
-    position: absolute; width: 16px; height: 16px; padding: 0; border: 0; cursor: pointer;
-    background: var(--c); transform: translate(-50%, 0) rotate(45deg); border-radius: 2px;
-  }
-  .marker[aria-pressed="true"] { box-shadow: 0 0 0 3px var(--panel), 0 0 0 5px var(--c); }
-  .marker + .mlabel { position: absolute; font-size: .75rem; color: var(--panel-muted); white-space: nowrap; pointer-events: none; }
+  /* Evidence highlighting (skills and answers) */
+  .hl-on .evi { transition: opacity .25s, box-shadow .25s; }
+  .hl-on .evi:not(.hit) { opacity: .35; }
+  .evi.hit { box-shadow: 0 0 0 2px var(--accent); }
+  .flash { animation: flash 1.6s ease-out; }
+  @keyframes flash { 0%, 40% { box-shadow: 0 0 0 3px var(--warm); } 100% { box-shadow: 0 0 0 0 transparent; } }
+  @media (prefers-reduced-motion: reduce) { .flash { animation: none; box-shadow: 0 0 0 3px var(--warm); } }
 
-  .playhead, .now { position: absolute; top: 0; bottom: 0; width: 0; pointer-events: none; z-index: 4; }
-  .playhead { border-left: 2px solid #FF7A6B; }
-  .playhead::before { content: ""; position: absolute; top: 0; left: -7px; border: 6px solid transparent; border-top: 9px solid #FF7A6B; }
-  .now { border-left: 1px dashed var(--panel-muted); z-index: 1; }
-  .now span { position: absolute; top: 7px; right: 5px; font-size: .72rem; color: var(--panel-muted); background: var(--panel-2); padding: 0 4px; }
+  /* Cards (training history and downstream tasks) */
+  .cards { display: grid; gap: 12px; grid-template-columns: 1fr; }
+  @media (min-width: 620px) { .cards { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 1100px) { .cards { grid-template-columns: repeat(4, 1fr); } }
+  .card { background: var(--tile-2); border: 1px solid var(--line); border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 8px; scroll-margin-top: 90px; }
+  .card .ctop { display: flex; justify-content: space-between; gap: 10px; font-size: .82rem; }
+  .card .kind { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; color: var(--k); }
+  .card .kind i { width: 8px; height: 8px; border-radius: 50%; background: var(--k); }
+  .card .when { font-family: var(--mono); color: var(--muted); font-size: .78rem; text-align: right; }
+  .card h3 { font-size: 1.05rem; font-weight: 700; line-height: 1.25; }
+  .card .org { color: var(--muted); font-size: .9rem; margin-top: -4px; }
+  .card .what { font-size: .93rem; margin: 0; }
+  .card .res { font-size: .9rem; margin: 0; padding: 8px 10px; border-radius: 8px; background: var(--accent-soft); }
+  .card .res b { color: var(--accent); }
+  .card .foot { margin-top: auto; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; padding-top: 4px; font-size: .88rem; }
+  .card .foot a { font-weight: 600; }
+  .card details { font-size: .9rem; color: var(--muted); }
+  .card summary { cursor: pointer; color: var(--accent); font-weight: 600; }
+  .card details p { margin: 8px 0 0; }
 
-  /* Inspector */
-  .inspector { border-top: 1px solid var(--panel-line); background: var(--panel-2); padding: 18px 20px 22px; min-height: 230px; }
-  @media (min-width: 900px) {
-    #insBody { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: 0 40px; }
-    #insBody .ins-a { grid-column: 1; } #insBody .ins-b { grid-column: 2; grid-row: 1 / span 6; }
-  }
-  .ins-label { color: var(--panel-muted); font-size: .8rem; margin-bottom: 14px; }
-  .ins-track { display: inline-flex; align-items: center; gap: 8px; font-size: .85rem; color: var(--panel-muted); }
-  .ins-track i { width: 9px; height: 9px; border-radius: 2px; }
-  .inspector h3 { font-size: 1.3rem; font-weight: 700; font-stretch: 106%; margin: 8px 0 4px; line-height: 1.2; }
-  .ins-org { color: var(--panel-muted); margin-bottom: 4px; }
-  .ins-when { font-size: .9rem; margin-bottom: 12px; color: var(--c); font-weight: 600; }
-  .inspector p { font-size: .98rem; }
-  .stat { display: flex; align-items: baseline; gap: 12px; margin: 4px 0 14px; }
-  .stat strong { font-size: 2.2rem; font-weight: 800; font-stretch: 118%; color: var(--t-research); line-height: 1; }
-  .stat span { font-size: .9rem; color: var(--panel-muted); }
-  .itags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
-  .itags span { background: var(--panel-3); border-radius: 6px; padding: 1px 8px; font-size: .85rem; color: var(--panel-muted); }
-  .ilinks { display: flex; flex-wrap: wrap; gap: 16px; font-weight: 600; }
-  .ilinks a { color: var(--t-research); }
+  /* Publications */
+  .pubs { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+  .pubs li { display: grid; grid-template-columns: auto 1fr; gap: 0 12px; }
+  .pubs .yr { font-family: var(--mono); font-size: .8rem; color: var(--muted); padding-top: 3px; }
+  .pubs b { display: block; font-weight: 600; line-height: 1.3; }
+  .pubs span { color: var(--muted); font-size: .88rem; }
 
-  /* Sections */
-  .sec { border-top: 1px solid var(--line); padding: 56px 0; display: grid; gap: 20px; }
-  .session-wrap { padding-bottom: 56px; }
-  @media (min-width: 900px) { .sec { grid-template-columns: 220px 1fr; gap: 48px; padding: 72px 0; } }
-  .sec h2 { font-size: 1.7rem; font-weight: 700; font-stretch: 115%; }
-  .sec .body { max-width: 760px; min-width: 0; }
-  .sec .wide { max-width: none; }
+  /* Limitations */
+  .lims { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+  .lims li { display: grid; grid-template-columns: 22px 1fr; gap: 8px; }
+  .lims .ic { width: 22px; height: 22px; border-radius: 6px; display: grid; place-items: center; background: var(--warm-soft); color: var(--warm); font-weight: 800; font-size: .8rem; }
+  .lims b { font-weight: 700; }
+  .lims span { color: var(--muted); }
 
-  /* Skills, list view, contact */
-  #skills .body { max-width: none; }
-  .sk { display: grid; gap: 24px 32px; margin: 0; }
-  @media (min-width: 640px) { .sk { grid-template-columns: 1fr 1fr; } }
-  @media (min-width: 1100px) { .sk { grid-template-columns: 1fr 1fr 1fr; } }
-  .sk dt { font-weight: 700; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
-  .sk dt i { width: 10px; height: 10px; border-radius: 3px; background: var(--c); flex: none; }
-  .sk dd { margin: 0; display: flex; flex-wrap: wrap; gap: 6px; }
-  .sk dd span { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 3px 10px; font-size: .95rem; }
-  .sk .core dd span { background: color-mix(in srgb, var(--c) 13%, var(--bg)); border-color: color-mix(in srgb, var(--c) 35%, var(--bg)); }
-  details.all summary { cursor: pointer; font-weight: 600; color: var(--accent); }
-  .list-group h3 { font-size: 1.15rem; font-weight: 700; font-stretch: 110%; margin: 28px 0 8px; }
-  .list-group ul { list-style: none; margin: 0; padding: 0; }
-  .list-group li { padding: 12px 0; border-top: 1px solid var(--line); }
-  .list-group .lt { font-weight: 700; }
-  .list-group .lm { color: var(--muted); font-size: .95rem; }
-  .list-group p { margin: 4px 0 0; }
-  .contact-line { font-size: clamp(1.5rem, 4.4vw, 2.6rem); font-weight: 700; font-stretch: 115%; margin-bottom: 16px; }
-  .contact-line a { word-break: break-word; }
-  footer { border-top: 1px solid var(--line); padding: 36px 0 56px; color: var(--muted); font-size: .9rem; }
+  /* Contact */
+  .t-contact { display: grid; gap: 18px 40px; align-items: end; }
+  @media (min-width: 900px) { .t-contact { grid-template-columns: 1fr 1fr; } }
+  .t-contact .rec { color: var(--panel-muted); margin: 6px 0 0; max-width: 46ch; }
+  .t-contact h2 { font-size: 1.6rem; font-weight: 700; font-stretch: 115%; }
+  .lines { display: grid; gap: 4px; }
+  .lines a { color: var(--panel-ink); font-size: clamp(1.25rem, 2.6vw, 1.9rem); font-weight: 700; font-stretch: 112%; word-break: break-word; }
+  .lines a:hover { color: var(--panel-accent); }
+  .clinks { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 10px; }
+  .clinks a { color: var(--panel-accent); font-weight: 600; }
+
+  footer { color: var(--muted); font-size: .88rem; padding: 26px 2px 0; }
 </style>
 </head>
 <body>
 <div class="wrap">
-
   <header class="top">
     <a class="mark" href="#">Mrityunjoy Bhattacharya</a>
     <nav aria-label="Main">
       <div class="links">
-        <a href="#session">Career</a>
+        <a href="#ask">Ask</a>
         <a href="#skills">Skills</a>
+        <a href="#history">Experience</a>
+        <a href="#tasks">Projects</a>
         <a href="#contact">Contact</a>
       </div>
       <button class="toggle" id="themeToggle" type="button" aria-label="Switch colour theme">Dark</button>
     </nav>
   </header>
 
-  <main>
-    <section class="intro">
+  <main class="grid hl-root" id="root">
+
+    <section class="tile t-hero" aria-label="Introduction">
       <div>
+        <div class="crumb">model card: <b>mrityunjoy-bhattacharya</b> / v2026.10</div>
         <h1>Mrityunjoy<br>Bhattacharya</h1>
         <p class="lead">I build models that trace audio deepfakes back to the family of generators that made them, and integrate LLMs and agentic systems into the software people already use.</p>
       </div>
       <div>
         <p class="status">MSc Computational Linguistics student and Research Assistant at the University of Stuttgart, working across audio forensics, LLM integration and agentic systems, with 2.5 years of enterprise IT experience at Wipro.</p>
         <div class="actions">
-          <a class="btn primary" href="assets/cv.pdf">Download CV</a>
+          <a class="btn primary" href="assets/cv.pdf">Download CV <small>the weights</small></a>
           <a class="btn" href="https://github.com/Mitulb188">GitHub</a>
           <a class="btn" href="https://www.linkedin.com/in/mrityunjoy-bhattacharya-04025b124/">LinkedIn</a>
         </div>
       </div>
     </section>
 
-    <section class="focus" aria-label="Working on now">
-      <h2>Working on now</h2>
-      <ul>
-        <li><b>Phylogenetic audio deepfake classification</b><span>Unsupervised research that groups synthetic audio into a family tree of the generators that produced it, so new generators show up as new branches.</span></li>
-        <li><b>LLM integration at TIK</b><span>Bringing local and external LLMs into the university's Znuny ticketing system for translation and ticket summarisation.</span></li>
-        <li><b>Agentic systems</b><span>Building LLM agents that use tools to carry out multi-step tasks inside existing workflows.</span></li>
+    <section class="tile t-meta evi" id="details" data-name="Currently training on" data-skills="Agentic systems|LLM integration|Claude Code" aria-label="Model details">
+      <div class="th"><h2>Model details</h2></div>
+      <dl class="meta">
+        <div><dt>base_model</dt><dd>B.Tech Electrical Engineering, KIIT University</dd></div>
+        <div><dt>fine_tuned_on</dt><dd>MSc Computational Linguistics, University of Stuttgart</dd></div>
+        <div><dt>pretraining_data</dt><dd>2.5 years of enterprise IT at Wipro, plus an ML internship at HighRadius</dd></div>
+        <div><dt>currently_training_on</dt><dd>Phylogenetic audio deepfake classification, LLM integration at TIK, agentic systems</dd></div>
+        <div><dt>deployment_region</dt><dd>Stuttgart, Germany</dd></div>
+        <div><dt>license</dt><dd><span class="lic">Open to work</span></dd></div>
+      </dl>
+    </section>
+
+    <section class="tile dark t-ask" id="ask" aria-label="Ask the model">
+      <div class="th"><h2>Ask the model</h2><span class="hint mono">temperature: 0, hallucinations: none</span></div>
+      <div class="prompts" id="prompts" role="group" aria-label="Suggested questions"></div>
+      <form class="askform" id="askform">
+        <label class="sr" for="askinput">Ask a question</label>
+        <input id="askinput" type="text" autocomplete="off" placeholder="Or type a question, e.g. can you build RAG systems?">
+        <button type="submit">Ask</button>
+      </form>
+      <div class="out" id="out">
+        <div class="q" id="outq">Pick a question to run inference.</div>
+        <div class="a" id="outa" aria-hidden="true"></div>
+        <div class="sr" id="outlive" aria-live="polite"></div>
+        <div class="ev" id="outev"></div>
+      </div>
+      <p class="disclaimer">Not a real LLM: a keyword lookup over the facts on this page, so every answer points to its evidence.</p>
+    </section>
+
+    <section class="tile t-eval evi" id="eval" data-name="EUSIPCO 2026 paper" data-skills="Audio deepfake detection|AASIST|EAT" aria-label="Evaluation results">
+      <div class="th"><h2>Evaluation results</h2><span class="hint">EER, lower is better</span></div>
+      <div class="big"><strong>2.48% EER</strong><span>on EnvSDD, unseen generators</span></div>
+      <p class="paper-t">Beyond the Seen: Environmental Sound Deepfake Detection Across Unseen Generators. EUSIPCO 2026, accepted.</p>
+      <div class="bars" id="bars">
+        <div class="bar base"><span>Strongest baseline</span><b>13.20%</b><div class="track"><div class="fill" data-w="100"></div></div></div>
+        <div class="bar ours"><span>EAT+AASIST (ours), an 81% relative improvement</span><b>2.48%</b><div class="track"><div class="fill" data-w="18.8"></div></div></div>
+      </div>
+      <div class="elinks">
+        <a href="https://eurasip.org/Proceedings/Eusipco/Eusipco2026/pdfs/0000226.pdf">Paper</a>
+        <a href="https://github.com/Mitulb188/EnvSDD">Code</a>
+      </div>
+      <div class="stats">
+        <div><b>4</b><span>publications</span></div>
+        <div><b>2.5 yrs</b><span>industry experience</span></div>
+        <div><b>3</b><span>university research groups</span></div>
+      </div>
+    </section>
+
+    <section class="tile t-skills" id="skills" aria-label="Capabilities">
+      <div class="th"><h2>Capabilities</h2><span class="hint">Click a skill to light up where I used it</span></div>
+      <div class="skillgroups" id="skillgroups"></div>
+      <p class="skillstatus" id="skillstatus" aria-live="polite">The number on each skill counts the roles, projects and papers on this page that back it up.</p>
+    </section>
+
+    <section class="tile t-history" id="history" aria-label="Experience and education">
+      <div class="th"><h2>Training history</h2><span class="hint">Experience and education, newest first</span></div>
+      <div class="cards" id="historyCards"></div>
+    </section>
+
+    <section class="tile t-tasks" id="tasks" aria-label="Projects">
+      <div class="th"><h2>Downstream tasks</h2><span class="hint">Selected projects</span></div>
+      <div class="cards" id="taskCards"></div>
+    </section>
+
+    <section class="tile t-pubs" id="pubs" aria-label="Publications">
+      <div class="th"><h2>Citations</h2><span class="hint">Publications</span></div>
+      <ul class="pubs">
+        <li><span class="yr">2026</span><div><b>Beyond the Seen: Environmental Sound Deepfake Detection Across Unseen Generators</b><span>K. Naduvathra Revi, M. Bhattacharya, S. A. Shaik Adam. EUSIPCO 2026, accepted. <a href="https://eurasip.org/Proceedings/Eusipco/Eusipco2026/pdfs/0000226.pdf">Paper</a></span></div></li>
+        <li><span class="yr">2024</span><div><b>Explaining Federated SPARQL Queries with How-Provenance</b><span>Z. Asma, M. Bhattacharya, D. Hernández, L. Galárraga, G. Flouris, I. Fundulaki, K. Hose. DKGFed Workshop, ESWC 2024. <a href="https://users.ics.forth.gr/~fgeo/files/DKGFed24.pdf">Paper</a></span></div></li>
+        <li><span class="yr">2019</span><div><b>Impact of Gallium Nitride Semiconductor Devices in Tri-State Boost Converter</b><span>K. Kumar, M. Bhattacharya, S. Garlapati, S. Banerjee. IEEE ICSET 2019.</span></div></li>
+        <li><span class="yr">2019</span><div><b>Comparative Analysis of AC-AC Power Converters for Primary Side Wireless Power Transfer System</b><span>K. Kumar, A. De, S. R. Singh, M. Bhattacharya, J. M. Kumbhare. i-PACT 2019.</span></div></li>
       </ul>
     </section>
 
-    <section class="session-wrap" id="session" aria-label="Career timeline">
-      <div class="session">
-        <div class="bar">
-          <span class="file">career.session</span>
-          <div class="transport" role="group" aria-label="Timeline controls">
-            <button class="tbtn" id="prev" type="button" aria-label="Previous item"><svg viewBox="0 0 16 16"><path d="M3 2h2v12H3zM14 2v12L6 8z"/></svg></button>
-            <button class="tbtn play" id="play" type="button" aria-label="Play the timeline"><svg viewBox="0 0 16 16" id="playIcon"><path d="M4 2l10 6-10 6z"/></svg></button>
-            <button class="tbtn" id="next" type="button" aria-label="Next item"><svg viewBox="0 0 16 16"><path d="M11 2h2v12h-2zM2 2v12l8-6z"/></svg></button>
-          </div>
-          <span class="readout" id="readout" aria-live="off">May 2016</span>
-          <span class="hint">Press play, or click any clip. On a phone, swipe the tracks sideways.</span>
+    <section class="tile t-limits" aria-label="Known limitations">
+      <div class="th"><h2>Known limitations</h2></div>
+      <ul class="lims">
+        <li><span class="ic">!</span><div><b>German is at A2.</b> <span>Fine-tuning is in progress.</span></div></li>
+        <li><span class="ic">!</span><div><b>Not yet trained on your codebase.</b> <span>Onboarding recommended.</span></div></li>
+        <li><span class="ic">!</span><div><b>Refuses to hallucinate.</b> <span>Every claim here is backed by a role, project or paper on this page.</span></div></li>
+        <li><span class="ic">!</span><div><b>May over-engineer personal websites.</b> <span>You are looking at the evidence.</span></div></li>
+      </ul>
+    </section>
+
+    <section class="tile dark t-contact" id="contact" aria-label="Contact">
+      <div>
+        <h2>Intended use</h2>
+        <p class="rec">Recommended for ML, NLP, speech and LLM engineering roles. Happy to talk about audio forensics, LLM integration, agentic systems, or a role on your team.</p>
+      </div>
+      <div>
+        <div class="lines">
+          <a href="mailto:mitulb188@gmail.com">mitulb188@gmail.com</a>
+          <a href="tel:+4915754896508">+49 157 5489 6508</a>
         </div>
-
-        <div class="editor">
-          <div class="scroller">
-            <div class="rows" id="rows">
-              <div class="row ruler">
-                <div class="head">Year</div>
-                <div class="lane" id="ruler" aria-label="Timeline ruler, click to move the playhead"></div>
-              </div>
-              <!-- Track rows are added here by the script -->
-              <div class="playhead" id="playhead" aria-hidden="true"></div>
-              <div class="now" id="now" aria-hidden="true"><span>Now</span></div>
-            </div>
-          </div>
-
-          <aside class="inspector" id="inspector" aria-live="polite">
-            <div class="ins-label">Inspector</div>
-            <div id="insBody"></div>
-          </aside>
+        <div class="clinks">
+          <a href="assets/cv.pdf">CV</a>
+          <a href="https://github.com/Mitulb188">GitHub</a>
+          <a href="https://www.linkedin.com/in/mrityunjoy-bhattacharya-04025b124/">LinkedIn</a>
         </div>
-      </div>
-    </section>
-
-    <section class="sec" id="skills">
-      <h2>Skills</h2>
-      <div class="body">
-        <dl class="sk">
-          <div class="core" style="--c:#4F5FC4"><dt><i></i>LLMs and agentic systems</dt><dd><span>LLM API integration (Claude, Gemini; cloud and local)</span><span>Agentic workflows</span><span>Agentic coding (Claude Code)</span><span>LangChain</span><span>RAG</span><span>Vector databases (Chroma)</span><span>Prompt engineering</span><span>LLM fine-tuning</span></dd></div>
-          <div class="core" style="--c:#1E7A8A"><dt><i></i>Speech and audio</dt><dd><span>Audio deepfake detection</span><span>AASIST</span><span>BEATs</span><span>CQCC</span><span>Prosodic feature extraction</span><span>Speech-to-text and text-to-speech pipelines</span></dd></div>
-          <div class="core" style="--c:#A9700E"><dt><i></i>Machine learning</dt><dd><span>PyTorch</span><span>TensorFlow</span><span>Hugging Face Transformers</span><span>scikit-learn</span><span>Pandas</span><span>NumPy</span><span>OpenCV</span></dd></div>
-          <div style="--c:var(--muted)"><dt><i></i>NLP</dt><dd><span>BERT</span><span>Sentence Transformers</span><span>NLTK</span><span>Data annotation and preprocessing</span></dd></div>
-          <div style="--c:var(--muted)"><dt><i></i>Programming and engineering</dt><dd><span>Python</span><span>SQL (PostgreSQL)</span><span>Java</span><span>C++</span><span>REST APIs</span><span>WebSockets</span><span>Flask</span><span>Docker</span><span>Git</span><span>HTML, CSS, JavaScript</span><span>Splunk</span><span>ServiceNow</span></dd></div>
-          <div style="--c:var(--muted)"><dt><i></i>Languages</dt><dd><span>English (C1)</span><span>German (A2, improving)</span><span>Hindi (native)</span><span>Bengali (native)</span></dd></div>
-        </dl>
-      </div>
-    </section>
-
-    <section class="sec" id="list">
-      <h2>Everything at once</h2>
-      <div class="body">
-        <details class="all">
-          <summary>Read the full timeline as a list</summary>
-          <div id="listView"></div>
-        </details>
-      </div>
-    </section>
-
-    <section class="sec" id="contact">
-      <h2>Contact</h2>
-      <div class="body">
-        <p class="contact-line"><a href="mailto:mitulb188@gmail.com">mitulb188@gmail.com</a><br><a href="tel:+4915754896508">+49 157 5489 6508</a></p>
-        <p>Happy to talk about audio forensics, LLM integration, agentic systems, or a role on your team. Based in Stuttgart, Germany.</p>
       </div>
     </section>
   </main>
 
-  <footer>&copy; Mrityunjoy Bhattacharya, Stuttgart.</footer>
+  <footer>Static HTML on GitHub Pages. No GPUs were harmed in the making of this page.</footer>
 </div>
 
 <script>
@@ -330,368 +375,228 @@
     root.dataset.theme = isDark() ? 'light' : 'dark';
     try { localStorage.setItem('theme', root.dataset.theme); } catch (e) {}
     label();
-    window.dispatchEvent(new Event('themechange'));
   });
 })();
 
-
-/* Seeded random numbers (mulberry32) so each clip always draws the same waveform */
-const Synth = { rng(seed) { let a = seed >>> 0; return () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; } };
-
-/* ---------- Career session: tracks, clips, playhead, inspector ---------- */
 (function () {
-  const START = 2016, END = 2027, SPAN = END - START;
-  const today = new Date();
-  const NOW = today.getFullYear() + today.getMonth() / 12 + today.getDate() / 365;
-  const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  const startOf = s => { const [y, m] = s.split('-').map(Number); return y + (m - 1) / 12; };
-  const endOf = s => s === 'now' ? NOW : (() => { const [y, m] = s.split('-').map(Number); return y + m / 12; })();
-
-  const TRACKS = [
-    { id: 'research',  name: 'Research',     color: '#5CC3B0' },
-    { id: 'industry',  name: 'Industry',     color: '#F0CF5A' },
-    { id: 'projects',  name: 'Projects',     color: '#8EA2F0' },
-    { id: 'pubs',      name: 'Publications', color: '#E8EDF7' },
-    { id: 'education', name: 'Education',    color: '#E39A7B' }
-  ];
-
-  const ITEMS = [
-    // Research roles
-    { id: 'iit', track: 'research', label: 'IIT Kharagpur', s: '2018-05', e: '2018-06',
-      title: 'Research Intern', org: 'Indian Institute of Technology Kharagpur', when: 'May 2018 to Jun 2018',
-      body: 'Research internship on electric motors and electric vehicles.' },
-    { id: 'ki', track: 'research', label: 'Institute for AI', s: '2024-01', e: '2026-09',
-      title: 'Research Assistant', org: 'Institute for Artificial Intelligence, University of Stuttgart', when: 'Jan 2024 to Sep 2026, part-time',
-      body: 'Built a RESTful web interface (Python, Flask) that visualises federated SPARQL queries across distributed data sources, designed API endpoints connecting heterogeneous sources, and maintained the department website.' },
-    { id: 'iabp', track: 'research', label: 'IABP', s: '2025-04', e: 'now',
-      title: 'Research Assistant', org: 'Institute of Acoustics and Building Physics (IABP), University of Stuttgart', when: 'Apr 2025 to present, part-time',
-      body: 'Built a Raspberry Pi Zero climate-monitoring system streaming 5+ sensors in real time with Python, moved the architecture to Arduino Giga R1 to cut measurement latency, ran a feasibility study on NVIDIA Jetson Nano for non-invasive temperature estimation, and built an Android app showing live readings during field sessions.' },
-    { id: 'tik', track: 'research', label: 'TIK', s: '2026-07', e: 'now',
-      title: 'Research Assistant', org: 'TIK (Technical Information and Communication Services), University of Stuttgart', when: 'Jul 2026 to present, part-time',
-      body: 'Integrated local and external LLM APIs into the Znuny ticketing system through custom extension packages, adding German to English translation and ticket summarisation for university agents and administrative staff.' },
-
-    // Industry
-    { id: 'hr', track: 'industry', label: 'HighRadius', s: '2019-05', e: '2020-04',
-      title: 'Machine Learning Intern', org: 'HighRadius, Bhubaneswar', when: 'May 2019 to Apr 2020',
-      body: 'Started as a summer intern, then built a B2B cloud application using time-series forecasting to predict financial trends, connected the ML pipeline to interactive web dashboards, and helped deploy it to the cloud.' },
-    { id: 'wipro', track: 'industry', label: 'Wipro', s: '2020-09', e: '2023-01',
-      title: 'Project Engineer', org: 'Wipro, Royal Dutch Shell account, Kolkata', when: 'Sep 2020 to Jan 2023',
-      body: 'Diagnosed and resolved a P2 live incident in BizTalk orchestration that had halted data transfer, writing the C# fix independently. Contributed to a Trading SAP upgrade across critical SAP Chemicals interfaces, recognised with a Certificate of Appreciation. Reviewed change requests in ServiceNow and monitored production with Splunk, using SQL for root-cause analysis.' },
-
-    // Projects
-    { id: 'music', track: 'projects', label: 'Music generation', s: '2024-01', e: '2024-12',
-      title: 'Generative AI for music', when: '2024',
-      body: 'A bidirectional RNN that generates original musical sequences, plus a spectrogram-based music classifier comparing STFT and Mel-spectrogram inputs.',
-      tags: ['RNNs', 'Spectrograms'] },
-    { id: 'kg', track: 'projects', label: 'Knowledge graph explorer', s: '2024-01', e: '2026-09',
-      title: 'Knowledge graph embedding explorer', when: 'Built during the Institute for AI role',
-      body: 'A RESTful web interface that visualises federated SPARQL queries across distributed data sources, built on an asynchronous Python backend with endpoints connecting heterogeneous sources. Built at the Institute for Artificial Intelligence.',
-      tags: ['Python', 'Flask', 'SPARQL'] },
-    { id: 'add', track: 'projects', label: 'Deepfake detection', s: '2025-01', e: '2025-12',
-      title: 'Audio deepfake detection under noisy conditions', when: '2025',
-      body: 'A fusion model that combines CQCC acoustic features with prosodic features (pitch, shimmer, HNR) to detect synthetic speech in noisy, lossy audio. The same features also apply to voice activity detection and audio quality assessment.',
-      tags: ['PyTorch', 'CQCC', 'Prosodic features'],
-      links: [{ label: 'Code', href: 'https://github.com/Mitulb188/Audio-deepfake-detection' }] },
-    { id: 'rag', track: 'projects', label: 'RAG pipeline', s: '2025-01', e: '2025-12',
-      title: 'Automated knowledge base and RAG pipeline', when: '2025',
-      body: 'A co-developed LangChain system that automates news research. NER and sentiment features live in PostgreSQL, Sentence-Transformer embeddings in Chroma, and Gemini 2.5 Flash writes answers that cite their sources, which keeps outputs grounded in the data.',
-      tags: ['LangChain', 'Chroma', 'PostgreSQL', 'Gemini'],
-      links: [{ label: 'Code', href: 'https://github.com/Mitulb188/News_Explorer__with_RAG' }] },
-    { id: 'vlm', track: 'projects', label: 'VLM synthetic data', s: '2025-01', e: '2025-12',
-      title: 'Synthetic data generation with multimodal LLMs', when: '2025',
-      body: 'A two-stage Qwen 2.5-VL and Granite 3.2-Vision pipeline that generates and labels reasoning tasks from COCO images. Diversity is checked with CLIP embeddings and HDBSCAN clustering; linguistic complexity with Flesch scores.',
-      tags: ['VLMs', 'CLIP', 'HDBSCAN'],
-      links: [{ label: 'Report', href: 'assets/Study_Project_Report.pdf' }] },
-    { id: 'sciwalk', track: 'projects', label: 'SciWalk monitoring', s: '2025-04', e: 'now',
-      title: 'Real-time climate monitoring for SciWalk', when: 'Built during the IABP role',
-      body: 'A Raspberry Pi Zero system that streams readings from 5+ environmental sensors in real time, plus an Android app that shows live sensor data during SciWalk field sessions. Built at the IABP.',
-      tags: ['Python', 'Raspberry Pi', 'Android'],
-      links: [{ label: 'Code', href: 'https://github.com/Mitulb188/SciWalkPrototype' }] },
-
-    // Publications (point markers)
-    { id: 'ipact', track: 'pubs', at: 2019.3, mark: '2019',
-      title: 'Comparative Analysis of AC-AC Power Converters for Primary Side Wireless Power Transfer System', org: 'K. Kumar, A. De, S. R. Singh, M. Bhattacharya, J. M. Kumbhare', when: 'i-PACT 2019' },
-    { id: 'icset', track: 'pubs', at: 2019.6, mark: '2019',
-      title: 'Impact of Gallium Nitride Semiconductor Devices in Tri-State Boost Converter', org: 'K. Kumar, M. Bhattacharya, S. Garlapati, S. Banerjee', when: 'IEEE ICSET 2019' },
-    { id: 'eswc', track: 'pubs', at: 2024.4, mark: 'ESWC 2024',
-      title: 'Explaining Federated SPARQL Queries with How-Provenance', org: 'Z. Asma, M. Bhattacharya, D. Hernández, L. Galárraga, G. Flouris, I. Fundulaki, K. Hose', when: 'DKGFed Workshop, ESWC 2024',
-      links: [{ label: 'Paper', href: 'https://users.ics.forth.gr/~fgeo/files/DKGFed24.pdf' }] },
-    { id: 'eusipco', track: 'pubs', at: 2026.6, mark: 'EUSIPCO 2026',
-      title: 'Beyond the Seen: Environmental Sound Deepfake Detection Across Unseen Generators', org: 'K. Naduvathra Revi, M. Bhattacharya, S. A. Shaik Adam', when: 'EUSIPCO 2026, accepted',
-      stat: ['2.48% EER', 'on EnvSDD, an 81% relative improvement over the strongest baseline (13.20%)'],
-      body: 'Our entry to the ICASSP 2026 Grand Challenge (Track 1). EAT+AASIST pairs a pre-trained Efficient Audio Transformer with a graph-based AASIST backend. Differential fine-tuning and data augmentation (codec simulation, gain normalisation) help it generalise to generators it never saw in training.',
-      links: [{ label: 'Paper', href: 'https://eurasip.org/Proceedings/Eusipco/Eusipco2026/pdfs/0000226.pdf' }, { label: 'Code', href: 'https://github.com/Mitulb188/EnvSDD' }] },
-
-    // Education
-    { id: 'btech', track: 'education', label: 'B.Tech, KIIT', s: '2016-05', e: '2020-05',
-      title: 'B.Tech Electrical Engineering', org: 'KIIT University', when: 'May 2016 to May 2020',
-      body: 'German grade equivalent 1.9 (German scale, 1.0 is best).' },
-    { id: 'msc', track: 'education', label: 'MSc, Stuttgart', s: '2024-10', e: 'now',
-      title: 'MSc Computational Linguistics', org: 'University of Stuttgart', when: 'Oct 2024 to present',
-      body: 'Specialisation in applied NLP. Coursework includes Deep Learning for Speech and Text Processing, Foundation Models, Machine Translation and Machine Learning.' }
-  ];
-
-  const trackOf = id => TRACKS.find(t => t.id === id);
-  ITEMS.forEach(it => {
-    if (it.at != null) { it.t0 = it.at; it.t1 = it.at; }
-    else { it.t0 = startOf(it.s); it.t1 = endOf(it.e); }
-    it.color = trackOf(it.track).color;
-  });
-  const ORDER = ITEMS.slice().sort((a, b) => a.t0 - b.t0 || TRACKS.indexOf(trackOf(a.track)) - TRACKS.indexOf(trackOf(b.track)));
-  const pct = t => (t - START) / SPAN;
-
-  const rows = document.getElementById('rows');
-  const playhead = document.getElementById('playhead');
-  const nowEl = document.getElementById('now');
-  const readout = document.getElementById('readout');
-  const insBody = document.getElementById('insBody');
-  const scroller = rows.parentElement;
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const place = (el, p) => { el.style.left = `calc(var(--hw) + (100% - var(--hw)) * ${p})`; };
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const KIND = { research: ['Research', 'var(--c-research)'], industry: ['Industry', 'var(--c-industry)'], edu: ['Education', 'var(--c-edu)'], project: ['Project', 'var(--c-research)'] };
 
-  /* Ruler */
-  const ruler = document.getElementById('ruler');
-  for (let y = START; y < END; y++) {
-    const tk = document.createElement('div');
-    tk.className = 'tick'; tk.style.left = (pct(y) * 100) + '%'; tk.textContent = y;
-    ruler.appendChild(tk);
+  /* ---------- Content ---------- */
+  const HISTORY = [
+    { id: 'tik', short: 'TIK', kind: 'research', when: 'Jul 2026 to now', title: 'Research Assistant', org: 'TIK, University of Stuttgart',
+      what: 'Integrating local and external LLM APIs into the university’s Znuny ticketing system through custom extension packages.',
+      res: 'German to English translation and ticket summarisation for agents and admin staff.',
+      skills: ['LLM integration', 'Python'] },
+    { id: 'iabp', short: 'IABP', kind: 'research', when: 'Apr 2025 to now', title: 'Research Assistant', org: 'Institute of Acoustics and Building Physics (IABP), University of Stuttgart',
+      what: 'Built a real-time climate-monitoring system on Raspberry Pi Zero and ported it to Arduino Giga R1 to cut measurement latency.',
+      res: '5+ sensors streaming live, plus an Android app for SciWalk field sessions.',
+      more: 'Also ran a feasibility study on NVIDIA Jetson Nano for non-invasive temperature estimation.',
+      links: [['Code', 'https://github.com/Mitulb188/SciWalkPrototype']],
+      skills: ['Python', 'Raspberry Pi and IoT', 'Android'] },
+    { id: 'msc', short: 'MSc', kind: 'edu', when: 'Oct 2024 to now', title: 'MSc Computational Linguistics', org: 'University of Stuttgart',
+      what: 'Specialisation in applied NLP.',
+      res: 'Coursework: Deep Learning for Speech and Text Processing, Foundation Models, Machine Translation, Machine Learning.',
+      skills: [] },
+    { id: 'ki', short: 'Institute for AI', kind: 'research', when: 'Jan 2024 to Sep 2026', title: 'Research Assistant', org: 'Institute for Artificial Intelligence, University of Stuttgart',
+      what: 'Built a RESTful interface (Python, Flask) that visualises federated SPARQL queries across distributed data sources.',
+      res: 'Related paper: DKGFed Workshop at ESWC 2024.',
+      more: 'Designed API endpoints connecting heterogeneous sources and maintained the department website.',
+      skills: ['Python', 'Flask', 'REST APIs', 'SPARQL'] },
+    { id: 'wipro', short: 'Wipro', kind: 'industry', when: 'Sep 2020 to Jan 2023', title: 'Project Engineer', org: 'Wipro, Royal Dutch Shell account, Kolkata',
+      what: 'Kept a production enterprise environment running under SLA, with ServiceNow change management and Splunk monitoring.',
+      res: 'Fixed a P2 BizTalk outage independently (C#); Certificate of Appreciation for a Trading SAP upgrade.',
+      more: 'Used SQL for data verification and root-cause analysis.',
+      skills: ['C#', 'SQL', 'SAP integration', 'Splunk', 'ServiceNow'] },
+    { id: 'btech', short: 'B.Tech', kind: 'edu', when: 'May 2016 to May 2020', title: 'B.Tech Electrical Engineering', org: 'KIIT University',
+      what: 'Where the signal processing started.',
+      res: 'German grade equivalent 1.9 (German scale, 1.0 is best).',
+      skills: [] },
+    { id: 'hr', short: 'HighRadius', kind: 'industry', when: 'May 2019 to Apr 2020', title: 'Machine Learning Intern', org: 'HighRadius, Bhubaneswar',
+      what: 'Built a B2B cloud app that uses time-series forecasting to predict financial trends.',
+      res: 'Deployed to the cloud for enterprise clients, with interactive dashboards.',
+      more: 'Started as a summer intern and stayed on as an ML intern.',
+      skills: ['Time-series forecasting', 'HTML, CSS, JavaScript'] },
+    { id: 'iit', short: 'IIT Kharagpur', kind: 'research', when: 'May 2018 to Jun 2018', title: 'Research Intern', org: 'IIT Kharagpur',
+      what: 'Research internship on electric motors and electric vehicles.',
+      res: 'First taste of research.',
+      skills: [] }
+  ];
+  const TASKS = [
+    { id: 'add', kind: 'project', when: '2025', title: 'Audio deepfake detection', org: 'Under noisy, lossy conditions',
+      what: 'Fusion model that combines CQCC acoustic features with prosody (pitch, shimmer, HNR) to catch synthetic speech.',
+      res: 'Also applicable to voice activity detection and audio quality assessment.',
+      links: [['Code', 'https://github.com/Mitulb188/Audio-deepfake-detection']],
+      skills: ['Audio deepfake detection', 'CQCC', 'Prosodic features', 'PyTorch'] },
+    { id: 'rag', kind: 'project', when: '2025', title: 'Knowledge base and RAG pipeline', org: 'Automated news research',
+      what: 'Co-built a LangChain system with NER and sentiment features in PostgreSQL and Sentence-Transformer embeddings in Chroma.',
+      res: 'Gemini 2.5 Flash answers with cited sources, grounded in the data.',
+      links: [['Code', 'https://github.com/Mitulb188/News_Explorer__with_RAG']],
+      skills: ['LangChain', 'RAG', 'Vector databases (Chroma)', 'LLM integration', 'SQL'] },
+    { id: 'vlm', kind: 'project', when: '2025', title: 'Synthetic data with vision-language models', org: 'Study project',
+      what: 'Two-stage Qwen 2.5-VL and Granite 3.2-Vision pipeline that generates and labels reasoning tasks from COCO images.',
+      res: 'Diversity checked with CLIP embeddings and HDBSCAN; complexity with Flesch scores.',
+      links: [['Report', 'assets/Study_Project_Report.pdf']],
+      skills: ['Vision-language models', 'Clustering (HDBSCAN)'] },
+    { id: 'music', kind: 'project', when: '2024', title: 'Generative AI for music', org: 'Generation and classification',
+      what: 'Bidirectional RNN that generates original musical sequences, plus a spectrogram-based music classifier.',
+      res: 'Compared STFT and Mel-spectrogram inputs.',
+      skills: ['Spectrograms'] }
+  ];
+
+  const SKILLS = [
+    ['LLMs and agentic systems', ['LLM integration', 'Agentic systems', 'Claude Code', 'LangChain', 'RAG', 'Vector databases (Chroma)', 'Prompt engineering']],
+    ['Speech and audio', ['Audio deepfake detection', 'AASIST', 'EAT', 'BEATs', 'CQCC', 'Prosodic features', 'Spectrograms']],
+    ['Machine learning', ['PyTorch', 'TensorFlow', 'Hugging Face Transformers', 'scikit-learn', 'Vision-language models', 'Clustering (HDBSCAN)', 'Time-series forecasting']],
+    ['Backend and data', ['Python', 'SQL', 'SPARQL', 'REST APIs', 'Flask', 'Docker', 'Git', 'HTML, CSS, JavaScript']],
+    ['Systems and enterprise', ['Raspberry Pi and IoT', 'Android', 'C#', 'SAP integration', 'Splunk', 'ServiceNow']],
+    ['Languages', ['English (C1)', 'German (A2, improving)', 'Hindi (native)', 'Bengali (native)']]
+  ];
+
+  /* ---------- Cards ---------- */
+  function card(it) {
+    const [kname, kcol] = KIND[it.kind];
+    const links = (it.links || []).map(([l, h]) => `<a href="${esc(h)}">${esc(l)}</a>`).join('');
+    return `<article class="card evi" id="c-${it.id}" data-name="${esc(it.short || it.title)}" data-skills="${esc(it.skills.join('|'))}" style="--k:${kcol}">
+      <div class="ctop"><span class="kind"><i></i>${kname}</span><span class="when">${esc(it.when)}</span></div>
+      <h3>${esc(it.title)}</h3>
+      <div class="org">${esc(it.org)}</div>
+      <p class="what">${esc(it.what)}</p>
+      <p class="res"><b>Result:</b> ${esc(it.res)}</p>
+      ${(links || it.more) ? `<div class="foot">${links}${it.more ? `<details><summary>More</summary><p>${esc(it.more)}</p></details>` : ''}</div>` : ''}
+    </article>`;
   }
+  document.getElementById('historyCards').innerHTML = HISTORY.map(card).join('');
+  document.getElementById('taskCards').innerHTML = TASKS.map(card).join('');
 
-  /* Tracks */
-  const state = {};
-  const els = {};
-  TRACKS.forEach(tr => {
-    const items = ITEMS.filter(i => i.track === tr.id);
-    // Greedy lane assignment so overlapping clips stack
-    const laneEnds = [];
-    items.slice().sort((a, b) => a.t0 - b.t0).forEach(it => {
-      const a = it.at != null ? (pct(it.at) > 0.8 ? it.at - it.mark.length * 0.075 : it.at - 0.05) : it.t0;
-      const b = it.at != null ? (pct(it.at) > 0.8 ? it.at + 0.05 : it.at + it.mark.length * 0.075) : it.t1;
-      let L = laneEnds.findIndex(end => end <= a + 1e-6);
-      if (L < 0) { L = laneEnds.length; laneEnds.push(b); } else laneEnds[L] = b;
-      it.lane = L;
-    });
-    const lanes = Math.max(1, laneEnds.length);
+  /* ---------- Skills with evidence counts ---------- */
+  const root = document.getElementById('root');
+  const evis = () => [...document.querySelectorAll('.evi')];
+  const evidenceFor = s => evis().filter(el => (el.dataset.skills || '').split('|').includes(s));
+  document.getElementById('skillgroups').innerHTML = SKILLS.map(([g, list]) => `
+    <div class="sg"><h3><i></i>${esc(g)}</h3><div class="chips">${list.map(s => {
+      const n = evidenceFor(s).length;
+      return n ? `<button type="button" class="skill" data-skill="${esc(s)}" aria-pressed="false">${esc(s)}<span class="n">${n}</span></button>`
+               : `<span class="skill">${esc(s)}</span>`;
+    }).join('')}</div></div>`).join('');
 
-    const row = document.createElement('div');
-    row.className = 'row';
-    row.innerHTML = `
-      <div class="head">
-        <span class="name"><i style="background:${tr.color}"></i>${tr.name}</span>
-        <span class="ms">
-          <button type="button" class="m" aria-pressed="false" aria-label="Mute ${tr.name}">M</button>
-          <button type="button" class="s" aria-pressed="false" aria-label="Solo ${tr.name}">S</button>
-        </span>
-      </div>
-      <div class="lane" style="height:${lanes * 32 + 10}px"><div class="grid-lines"></div></div>`;
-    rows.insertBefore(row, playhead);
-    const lane = row.querySelector('.lane');
-    state[tr.id] = { mute: false, solo: false, row };
-
-    items.forEach(it => {
-      let el;
-      if (it.at != null) {
-        el = document.createElement('button');
-        el.className = 'marker';
-        el.style.left = (pct(it.at) * 100) + '%';
-        el.style.top = (9 + it.lane * 32) + 'px';
-        const lab = document.createElement('span');
-        lab.className = 'mlabel';
-        if (pct(it.at) > 0.8) { lab.style.right = `calc(${(1 - pct(it.at)) * 100}% + 12px)`; }
-        else { lab.style.left = `calc(${pct(it.at) * 100}% + 12px)`; }
-        lab.style.top = (8 + it.lane * 32) + 'px';
-        lab.textContent = it.mark;
-        lane.appendChild(el); lane.appendChild(lab);
-      } else {
-        el = document.createElement('button');
-        el.className = 'clip';
-        el.style.left = (pct(it.t0) * 100) + '%';
-        el.style.width = `max(12px, ${(pct(it.t1) - pct(it.t0)) * 100}%)`;
-        el.style.top = (5 + it.lane * 32) + 'px';
-        el.innerHTML = `<canvas aria-hidden="true"></canvas><span>${esc(it.label)}</span>`;
-        lane.appendChild(el);
-      }
-      el.type = 'button';
-      el.style.setProperty('--c', it.color);
-      el.setAttribute('aria-pressed', 'false');
-      el.title = it.label || it.mark;
-      el.setAttribute('aria-label', `${tr.name}: ${it.title}${it.org && it.track !== 'pubs' ? ', ' + it.org : ''}, ${it.when}`);
-      el.addEventListener('click', () => { stop(); select(it.id, true); });
-      els[it.id] = el;
-    });
-
-    const [mBtn, sBtn] = row.querySelectorAll('.ms button');
-    mBtn.addEventListener('click', () => { state[tr.id].mute = !state[tr.id].mute; mBtn.setAttribute('aria-pressed', state[tr.id].mute); applyDim(); });
-    sBtn.addEventListener('click', () => { state[tr.id].solo = !state[tr.id].solo; sBtn.setAttribute('aria-pressed', state[tr.id].solo); applyDim(); });
+  const status = document.getElementById('skillstatus');
+  const defaultStatus = status.innerHTML;
+  let active = null;
+  function clearHL() {
+    root.classList.remove('hl-on');
+    evis().forEach(el => el.classList.remove('hit'));
+  }
+  function setSkill(s) {
+    document.querySelectorAll('button.skill').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.skill === s)));
+    clearHL();
+    if (!s) { active = null; status.innerHTML = defaultStatus; return; }
+    active = s;
+    const ev = evidenceFor(s);
+    root.classList.add('hl-on');
+    ev.forEach(el => el.classList.add('hit'));
+    status.innerHTML = `<b>${esc(s)}</b> is backed by ${ev.length} ${ev.length === 1 ? 'item' : 'items'}: ` +
+      ev.map(el => `<button type="button" data-goto="${el.id}">${esc(el.dataset.name)}</button>`).join(', ') +
+      `. <button type="button" data-clear>Clear</button>`;
+  }
+  document.getElementById('skillgroups').addEventListener('click', e => {
+    const b = e.target.closest('button.skill'); if (!b) return;
+    setSkill(active === b.dataset.skill ? null : b.dataset.skill);
+  });
+  function goto(id) {
+    const el = document.getElementById(id); if (!el) return;
+    el.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'center' });
+    el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash');
+  }
+  status.addEventListener('click', e => {
+    if (e.target.closest('[data-clear]')) { setSkill(null); return; }
+    const g = e.target.closest('[data-goto]'); if (g) goto(g.dataset.goto);
   });
 
-  function applyDim() {
-    const anySolo = TRACKS.some(t => state[t.id].solo);
-    TRACKS.forEach(t => {
-      const s = state[t.id];
-      s.row.classList.toggle('dim', s.mute || (anySolo && !s.solo));
-    });
-  }
-  const audible = it => { const s = state[it.track]; const anySolo = TRACKS.some(t => state[t.id].solo); return !s.mute && (!anySolo || s.solo); };
-
-  /* Waveforms inside clips */
-  const hash = s => { let h = 2166136261; for (const ch of s) h = Math.imul(h ^ ch.charCodeAt(0), 16777619); return h >>> 0; };
-  function drawWaves() {
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    ITEMS.filter(i => i.at == null).forEach(it => {
-      const el = els[it.id], cv = el.querySelector('canvas');
-      const w = el.clientWidth, h = el.clientHeight;
-      el.classList.toggle('tiny', w < 56);
-      if (!w) return;
-      cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
-      const ctx = cv.getContext('2d');
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      ctx.fillStyle = it.color; ctx.globalAlpha = 0.35;
-      const rand = Synth.rng(hash(it.id)), n = Math.floor(w / 3);
-      let word = 0, left = 0;
-      for (let i = 0; i < n; i++) {
-        if (left <= 0) { word = rand() < 0.2 ? 0.08 : 0.3 + rand() * 0.6; left = 3 + (rand() * 10 | 0); }
-        left--;
-        const a = Math.max(0.06, word * (0.4 + 0.6 * rand())) * (h / 2 - 3);
-        ctx.fillRect(i * 3, h / 2 - a, 2, a * 2);
-      }
-    });
-  }
-
-  /* Inspector */
-  let selected = null;
-  function renderInspector(it) {
-    const tr = trackOf(it.track);
-    const tags = (it.tags || []).map(t => `<span>${esc(t)}</span>`).join('');
-    const links = (it.links || []).map(l => `<a href="${esc(l.href)}">${esc(l.label)}</a>`).join('');
-    insBody.style.setProperty('--c', it.color);
-    insBody.innerHTML = `
-      <div class="ins-a">
-        <span class="ins-track"><i style="background:${tr.color}"></i>${tr.name}</span>
-        <h3>${esc(it.title)}</h3>
-        ${it.org ? `<div class="ins-org">${esc(it.org)}</div>` : ''}
-        <div class="ins-when" style="color:${it.color}">${esc(it.when)}</div>
-        ${it.stat ? `<div class="stat"><strong>${esc(it.stat[0])}</strong><span>${esc(it.stat[1])}</span></div>` : ''}
-      </div>
-      <div class="ins-b">
-        ${it.body ? `<p>${esc(it.body)}</p>` : ''}
-        ${tags ? `<div class="itags">${tags}</div>` : ''}
-        ${links ? `<div class="ilinks">${links}</div>` : ''}
-      </div>`;
-  }
-  function select(id, movePlayhead) {
-    const it = ITEMS.find(i => i.id === id);
-    if (!it || it === selected) { if (it && movePlayhead) setT(it.t0); return; }
-    if (selected) els[selected.id].setAttribute('aria-pressed', 'false');
-    selected = it;
-    els[id].setAttribute('aria-pressed', 'true');
-    renderInspector(it);
-    if (movePlayhead) setT(it.t0);
-  }
-
-  /* Playhead */
-  let t = START + 4 / 12;
-  function label(tt) {
-    const y = Math.floor(tt), m = Math.min(11, Math.floor((tt - y) * 12 + 1e-6));
-    return `${MONTHS[m]} ${y}`;
-  }
-  function setT(tt) {
-    t = Math.max(START, Math.min(NOW, tt));
-    place(playhead, pct(t));
-    readout.textContent = label(t);
-    ITEMS.forEach(it => { if (it.at == null) els[it.id].classList.toggle('on', t >= it.t0 && t <= it.t1); });
-    // Keep the playhead in view when the timeline scrolls sideways
-    const hw = rows.querySelector('.head').offsetWidth;
-    const x = hw + (rows.clientWidth - hw) * pct(t);
-    if (x < scroller.scrollLeft + hw + 20 || x > scroller.scrollLeft + scroller.clientWidth - 40) {
-      scroller.scrollLeft = Math.max(0, x - scroller.clientWidth / 2);
-    }
-  }
-  function latestAt(tt) {
-    let pick = null;
-    for (const it of ORDER) { if (it.t0 <= tt + 1e-6 && audible(it)) pick = it; }
-    return pick;
-  }
-  place(nowEl, pct(NOW));
-
-  /* Transport */
-  const playBtn = document.getElementById('play');
-  const icon = document.getElementById('playIcon');
-  const PLAY = '<path d="M4 2l10 6-10 6z"/>', PAUSE = '<path d="M3 2h4v12H3zM9 2h4v12H9z"/>';
-  let raf = null, timer = null, last = 0;
-  const DURATION = 18; // seconds for the whole decade
-  function stop() {
-    if (raf) cancelAnimationFrame(raf); raf = null;
-    if (timer) clearInterval(timer); timer = null;
-    icon.innerHTML = PLAY; playBtn.setAttribute('aria-label', 'Play the timeline');
-  }
-  function play() {
-    if (t >= NOW - 0.02) setT(START);
-    icon.innerHTML = PAUSE; playBtn.setAttribute('aria-label', 'Pause the timeline');
-    if (reduced) {
-      timer = setInterval(() => { if (!step(1)) stop(); }, 1600);
-      step(1);
-      return;
-    }
-    last = performance.now();
-    const tick = now => {
-      const dt = (now - last) / 1000; last = now;
-      setT(t + dt * (NOW - START) / DURATION);
-      const it = latestAt(t); if (it) select(it.id, false);
-      if (t >= NOW) { stop(); return; }
-      raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-  }
-  function step(dir) {
-    const list = ORDER.filter(audible);
-    let i = selected ? list.indexOf(selected) : -1;
-    if (i < 0) i = dir > 0 ? -1 : list.length;
-    const nx = list[i + dir];
-    if (!nx) return false;
-    select(nx.id, true);
-    return true;
-  }
-  playBtn.addEventListener('click', () => (raf || timer) ? stop() : play());
-  document.getElementById('prev').addEventListener('click', () => { stop(); step(-1); });
-  document.getElementById('next').addEventListener('click', () => { stop(); step(1); });
-
-  // Click or drag on the ruler to scrub
-  let scrubbing = false;
-  const scrub = e => {
-    const r = ruler.getBoundingClientRect();
-    setT(START + Math.min(1, Math.max(0, (e.clientX - r.left) / r.width)) * SPAN);
-    const it = latestAt(t); if (it) select(it.id, false);
+  /* ---------- Ask the model ---------- */
+  const QA = [
+    { id: 'llm', q: 'Can you integrate LLMs into systems we already use?', keys: /llm|integrat|gpt|chatbot|translat|summar|ticket|znuny|existing/,
+      a: 'Yes, that is my current job. At TIK I integrate local and external LLM APIs into the university’s Znuny ticketing system through custom extension packages, adding German to English translation and ticket summarisation for agents and admin staff. Before that I co-built a LangChain RAG pipeline that answers with cited sources.',
+      ev: ['c-tik', 'c-rag'] },
+    { id: 'audio', q: 'Can you detect audio deepfakes?', keys: /deepfake|audio|speech|spoof|voice|sound|fake|eer|eusipco/,
+      a: 'Yes. Our EAT+AASIST system reached 2.48% EER on EnvSDD for generators it never saw in training, an 81% relative improvement over the strongest baseline (EUSIPCO 2026). I also built a CQCC plus prosody fusion model for noisy, lossy speech, and I am now working on tracing fakes back to the family of generators that produced them.',
+      ev: ['eval', 'c-add', 'details'] },
+    { id: 'rag', q: 'Have you built RAG systems?', keys: /rag|retriev|vector|embedding|langchain|chroma|knowledge base/,
+      a: 'Yes. I co-built a LangChain pipeline that automates news research: NER and sentiment features in PostgreSQL, Sentence-Transformer embeddings in Chroma, and Gemini 2.5 Flash writing answers that cite their sources.',
+      ev: ['c-rag'] },
+    { id: 'agents', q: 'Do you work with agentic systems?', keys: /agent|agentic|automation|autonomous|tool use|claude/,
+      a: 'Yes. I build LLM agents that use tools to carry out multi-step tasks inside existing workflows, and I am hands-on with agentic coding (Claude Code).',
+      ev: ['details'] },
+    { id: 'prod', q: 'Have you supported production systems?', keys: /production|enterprise|incident|outage|sap|support|sla|industry|wipro|shell/,
+      a: 'Yes, for 2.5 years at Wipro on the Royal Dutch Shell account. I independently diagnosed and fixed a P2 live incident in BizTalk orchestration (C#), contributed to a Trading SAP upgrade that earned a Certificate of Appreciation, and worked under SLA with ServiceNow change management and Splunk monitoring.',
+      ev: ['c-wipro'] },
+    { id: 'hw', q: 'Can you work with hardware?', keys: /hardware|iot|raspberry|arduino|embedded|sensor|jetson|android|electrical/,
+      a: 'Yes, I am an electrical engineer by training. At IABP I built a Raspberry Pi Zero system streaming 5+ sensors in real time, ported it to Arduino Giga R1, tested NVIDIA Jetson Nano for non-invasive temperature estimation, and built an Android app for field sessions.',
+      ev: ['c-iabp', 'c-btech'] },
+    { id: 'de', q: 'Sprechen Sie Deutsch?', keys: /german|deutsch|sprech|language|english|hindi|bengali/,
+      a: 'Ein bisschen! German A2 and actively improving. English C1, and Hindi and Bengali are native.',
+      ev: ['skills'] },
+    { id: 'hire', q: 'Why should we hire you?', keys: /hire|why|strength|fit|best|good at/,
+      a: 'Because I have worked on both sides: published research (EUSIPCO 2026, 2.48% EER on unseen generators) and 2.5 years keeping a production enterprise environment running. I can take a model from a paper to the tools people use every day.',
+      ev: ['eval', 'c-wipro', 'c-tik'] }
+  ];
+  const SKILLQ = { q: 'What is your stack?', a: 'Python first, then PyTorch, Hugging Face Transformers, LangChain, SQL and Flask, with LLM APIs (Claude, Gemini; cloud and local). The Capabilities tile shows where each one was used.', ev: ['skills'] };
+  const FALLBACK = { a: 'I am a keyword lookup, not a real LLM, so I would rather not hallucinate an answer to that. Try one of the suggested questions, or ask the real me: mitulb188@gmail.com.', ev: ['contact'] };
+  const EVNAME = id => {
+    const el = document.getElementById(id);
+    if (!el) return id;
+    return el.dataset.name || ({ skills: 'Capabilities', contact: 'Contact', details: 'Model details' }[id]) || id;
   };
-  ruler.addEventListener('pointerdown', e => { stop(); scrubbing = true; ruler.setPointerCapture(e.pointerId); scrub(e); });
-  ruler.addEventListener('pointermove', e => { if (scrubbing) scrub(e); });
-  ruler.addEventListener('pointerup', () => { scrubbing = false; });
 
-  /* List view (same content, plain list) */
-  const listView = document.getElementById('listView');
-  const groups = [['research', 'Research roles'], ['industry', 'Industry'], ['pubs', 'Publications'], ['projects', 'Projects'], ['education', 'Education']];
-  listView.innerHTML = groups.map(([id, name]) => {
-    const items = ITEMS.filter(i => i.track === id).sort((a, b) => b.t0 - a.t0);
-    return `<div class="list-group"><h3>${name}</h3><ul>${items.map(it => `
-      <li><div class="lt">${esc(it.title)}</div>
-      <div class="lm">${it.org ? esc(it.org) + '. ' : ''}${esc(it.when)}</div>
-      ${it.stat ? `<p><strong>${esc(it.stat[0])}</strong> ${esc(it.stat[1])}.</p>` : ''}
-      ${it.body ? `<p>${esc(it.body)}</p>` : ''}
-      ${(it.links || []).length ? `<p>${it.links.map(l => `<a href="${esc(l.href)}">${esc(l.label)}</a>`).join('&emsp;')}</p>` : ''}</li>`).join('')}</ul></div>`;
-  }).join('');
+  const prompts = document.getElementById('prompts');
+  prompts.innerHTML = QA.map(x => `<button type="button" class="prompt" data-q="${x.id}" aria-pressed="false">${esc(x.q)}</button>`).join('');
+  const outq = document.getElementById('outq'), outa = document.getElementById('outa'), outlive = document.getElementById('outlive'), outev = document.getElementById('outev');
+  let timer = null;
+  function answer(question, ans) {
+    clearInterval(timer);
+    outq.textContent = '> ' + question;
+    outlive.textContent = ans.a;
+    outev.innerHTML = '';
+    const showEv = () => {
+      outev.innerHTML = 'Evidence: ' + ans.ev.map(id => `<button type="button" data-goto="${id}">${esc(EVNAME(id))}</button>`).join('');
+    };
+    if (reduced) { outa.textContent = ans.a; showEv(); return; }
+    outa.textContent = ''; outa.classList.add('typing');
+    let i = 0;
+    timer = setInterval(() => {
+      i += 3;
+      outa.textContent = ans.a.slice(0, i);
+      if (i >= ans.a.length) { clearInterval(timer); outa.classList.remove('typing'); showEv(); }
+    }, 16);
+  }
+  prompts.addEventListener('click', e => {
+    const b = e.target.closest('.prompt'); if (!b) return;
+    prompts.querySelectorAll('.prompt').forEach(p => p.setAttribute('aria-pressed', String(p === b)));
+    const x = QA.find(q => q.id === b.dataset.q);
+    answer(x.q, x);
+  });
+  document.getElementById('askform').addEventListener('submit', e => {
+    e.preventDefault();
+    const input = document.getElementById('askinput');
+    const text = input.value.trim(); if (!text) return;
+    const t = text.toLowerCase();
+    prompts.querySelectorAll('.prompt').forEach(p => p.setAttribute('aria-pressed', 'false'));
+    let hit = QA.find(q => q.keys.test(t));
+    if (!hit && /stack|skill|python|pytorch|tools|tech/.test(t)) hit = SKILLQ;
+    answer(text, hit || FALLBACK);
+    input.value = '';
+  });
+  outev.addEventListener('click', e => { const g = e.target.closest('[data-goto]'); if (g) goto(g.dataset.goto); });
 
-  /* Start */
-  setT(t);
-  select('eusipco', false);
-  // On narrow screens open on the recent years, where most of the content is
-  scroller.scrollLeft = scroller.scrollWidth;
-  drawWaves();
-  let rt = null;
-  window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { drawWaves(); setT(t); }, 150); });
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(drawWaves);
+  /* ---------- Evaluation bars animate once when visible ---------- */
+  const fills = document.querySelectorAll('#bars .fill');
+  const grow = () => fills.forEach(f => { f.style.width = f.dataset.w + '%'; });
+  if ('IntersectionObserver' in window && !reduced) {
+    const io = new IntersectionObserver(([en]) => { if (en.isIntersecting) { grow(); io.disconnect(); } }, { threshold: 0.4 });
+    io.observe(document.getElementById('bars'));
+  } else grow();
 })();
-
 </script>
 </body>
 </html>
